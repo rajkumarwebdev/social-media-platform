@@ -14,7 +14,7 @@ const app = express();
 app.use(express.json())
 const STATIC=path.join(path.dirname(__dirname),"frontend","dist");
 app.use(express.static(STATIC))
-//Handle Cross origin requests
+//Handle Cross origin requests..
 app.use(cors({
     origin:"*",
     allowedHeaders:['Content-Type','Authorization'],
