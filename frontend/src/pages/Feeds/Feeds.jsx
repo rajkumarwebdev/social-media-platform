@@ -34,8 +34,8 @@ import FeedAlerts from "./FeedAlerts";
 import PostDropOp from "./PostDropOp";
 import SharePost from "./SharePost/SharePost";
 import Loader from "../../components/Loader/Loader";
-const Feeds = ({ userId }) => {
-  const [commentCount,setCommentCount]=useState();
+const Feeds = ({ userId, post_id }) => {
+  const [commentCount, setCommentCount] = useState();
   const [commented, setCommented] = useState({});
   const [posts, setPosts] = useState([]);
   const [dropdownState, setDropdownState] = useState({});
@@ -52,7 +52,7 @@ const Feeds = ({ userId }) => {
   const [comments, setComments] = useState([]);
   const { id } = useParams();
   const dropRef = useRef();
-  const [showShare,setShowShare]=useState(false);
+  const [showShare, setShowShare] = useState(false);
   function calculateTimeDifference(currentDate, previousDate) {
     const currentDateObj = new Date(currentDate);
     const previousDateObj = new Date(previousDate);
@@ -80,20 +80,20 @@ const Feeds = ({ userId }) => {
     }
   }
 
-    useEffect(()=>{
-      const re=async()=>{
-         const res= await handleUpdateComment();
-         setCommentCount(res);
-      }
-     
-      re()
-    },[])
+  useEffect(() => {
+    const re = async () => {
+      const res = await handleUpdateComment();
+      setCommentCount(res);
+    };
 
-    //handleShowShare
+    re();
+  }, []);
 
-    const handleShowShare=(postId)=>{
-      setShowShare((prevState)=>({[postId]: !prevState[postId]}))
-    }
+  //handleShowShare
+
+  const handleShowShare = (postId) => {
+    setShowShare((prevState) => ({ [postId]: !prevState[postId] }));
+  };
   //triel
   // useEffect(()=>{
   //   const test=async ()=>{
@@ -109,7 +109,7 @@ const Feeds = ({ userId }) => {
   //   test()
   // },[commented])
   //To handle copy the text post
-const handleCopyPost = (texttoCopy) => {
+  const handleCopyPost = (texttoCopy) => {
     // console.log(texttoCopy)
 
     if (navigator) {
@@ -160,9 +160,22 @@ const handleCopyPost = (texttoCopy) => {
     const fetchPosts = async () => {
       try {
         const response = await axiosInstance.get("/post");
-        setPosts(response.data.response.reverse());
+        if (post_id) {
+          
+          setPosts(response.data.response);
+        } else {
+          setPosts(response.data.response.reverse());
+        }
+
         setLoaded((prev) => !prev);
 
+        if (post_id) {
+          setPosts(
+            posts.filter((post) => {
+              post._id == post_id;
+            })
+          );
+        }
         setLoading(false);
         console.log(response.data.response);
         // console.log(response.data.response);
@@ -174,8 +187,8 @@ const handleCopyPost = (texttoCopy) => {
     };
     fetchPosts();
 
-    // setInterval(fetchPosts,10000);
-  }, [liked, postDeleted,comments]);
+    // setInterval(fetchPosts,5000);
+  }, [liked, postDeleted, comments]);
 
   const handleDropDown = (postId) => {
     setDropdownState((prevState) => ({
@@ -187,9 +200,6 @@ const handleCopyPost = (texttoCopy) => {
     return isLike;
   };
 
-  if(loading){
-    return <Loader />
-  }
   if (id) {
     return (
       <>
@@ -200,6 +210,7 @@ const handleCopyPost = (texttoCopy) => {
     return (
       <div className="feed-wrapper">
         {/* Single post */}
+
         {posts.length != 0 && posts.length != 0 ? (
           posts.map((post) => {
             const isLikedByYou = checkIslikedByYou(post);
@@ -268,33 +279,53 @@ const handleCopyPost = (texttoCopy) => {
                         <div>5</div>
                       </div>
                       <div className="fooder-items">
-                        <Icon icon={faShare} onClick={()=>{handleShowShare(post._id)}}/>
+                        <Icon
+                          icon={faShare}
+                          onClick={() => {
+                            handleShowShare(post._id);
+                          }}
+                        />
                         <div>20</div>
                       </div>
-                 
                     </div>
                     <div className="post-save-btn">
                       <Icon className="light" icon={faBookmark} />
                     </div>
                   </div>
                   {/* Post operations-dropdown */}
-                  <PostDropOp currentUser={currentUser} dropdownState={dropdownState} handleCopyPost={handleCopyPost} handleDeletePost={handleDeletePost} post={post}
-                 dropRef={dropRef}
-                 />
-                
-                {showShare[post._id]&&<SharePost postId={post._id} setShowShare={setShowShare} />}
+                  <PostDropOp
+                    currentUser={currentUser}
+                    dropdownState={dropdownState}
+                    handleCopyPost={handleCopyPost}
+                    handleDeletePost={handleDeletePost}
+                    post={post}
+                    dropRef={dropRef}
+                  />
+
+                  {showShare[post._id] && (
+                    <SharePost postId={post._id} setShowShare={setShowShare} />
+                  )}
                 </div>
-               
+
                 {/* Comment section */}
-               <Comment calculateTimeDifference={calculateTimeDifference} comment={comment} commentState={commentState} handlePostComment={handlePostComment} post={post} setComment={setComment} comments={comments} currentUser={currentUser}/>
+                <Comment
+                  calculateTimeDifference={calculateTimeDifference}
+                  comment={comment}
+                  commentState={commentState}
+                  handlePostComment={handlePostComment}
+                  post={post}
+                  setComment={setComment}
+                  comments={comments}
+                  currentUser={currentUser}
+                />
               </div>
             );
           })
         ) : (
           <h1 className="no-post-info">Oops!No posts.</h1>
         )}
-      {/* For alert to user */}
-          <FeedAlerts err={err} errMsg={errMsg} isCopied={isCopied}/>
+        {/* For alert to user */}
+        <FeedAlerts err={err} errMsg={errMsg} isCopied={isCopied} />
       </div>
     );
   }

@@ -9,6 +9,7 @@ import CreatePost from "./pages/Post/CreatePost";
 import Feeds from "./pages/Feeds/Feeds";
 import Profile from "./pages/Profile/Profile";
 import Chat from "./pages/Chat/Chat";
+import SinglePost from "./pages/SinglePost/SinglePost";
 const App = () => {
   return (
     <>
@@ -24,6 +25,8 @@ const App = () => {
         >
           <Route index path="/" element={<Feeds />}></Route>
           <Route index path="/:id" element={<Feeds />}></Route>
+          <Route index path="/post/:ids" element={<SinglePost />}></Route>
+          
           <Route path="chat" element={<Chat />}></Route>
           <Route path="post" element={<CreatePost />}></Route>
           <Route path="profile" element={<Profile />}></Route>

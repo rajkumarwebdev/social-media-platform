@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+
 import axiosInstance from "../../axiosInstance";
 export const handleLike = async (postId, currentUserId,setLiked) => {
   try {
@@ -17,6 +17,7 @@ export const handleLike = async (postId, currentUserId,setLiked) => {
 export const handleComment=async(postId,setCommentState,setComments,setCommented)=>{
   setCommentState((prevComment)=>({[postId]:!prevComment[postId]}))
     try {
+      console.log(postId)
       const response=await axiosInstance.post("/post/comments",{postId:postId});
      response.data&&setComments(response.data.reverse())
     //  console.log(response.data)
@@ -43,10 +44,12 @@ export const handlePostComment=async (postId,comment,userId)=>{
 export const handleUpdateComment=async()=>{
 
   try {
+    console.log("hii")
+    
     const response = await axiosInstance.post("post/ccount");
     console.log(response.data)
     return response.data;
   } catch (error) {
-    console.log(error.message)
+    console.log(error)
   }
 }

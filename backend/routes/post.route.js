@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-
+const checkValidId=require("../middlewares/checkValidId.js")
 const UserModel = require("../models/user.model.js");
 const PostModel = require("../models/post.model.js");
 const CommentModel = require("../models/comment.model.js");
@@ -62,6 +62,21 @@ router.get("/", async (req, res) => {
     res.sendStatus(500);
   }
 });
+
+//get single post
+router.get("/:id",async (req, res) => {
+  try {
+    const postId=req.body.postid;
+   
+    console.log("Received",postId)
+    res.send("Good")
+    // return res.json(response);
+  } catch (error) {
+    res.sendStatus(500);
+  }
+});
+
+
 
 //Get comment count for single post
 router.post("/ccount", async (req, res) => {
@@ -135,6 +150,7 @@ router.post("/comment", async (req, res) => {
 //Get all comments for a single post
 router.post("/comments", async (req, res) => {
   try {
+
     const postId = req.body.postId;
     // console.log(postId)
     const response=await CommentModel.find({postId:postId}).populate("commentedBy")
