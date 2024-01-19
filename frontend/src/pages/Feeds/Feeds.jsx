@@ -34,7 +34,7 @@ import FeedAlerts from "./FeedAlerts";
 import PostDropOp from "./PostDropOp";
 import SharePost from "./SharePost/SharePost";
 import Loader from "../../components/Loader/Loader";
-const Feeds = ({ userId, post_id }) => {
+const Feeds = ({ userId, post_id,className }) => {
   const [commentCount, setCommentCount] = useState();
   const [commented, setCommented] = useState({});
   const [posts, setPosts] = useState([]);
@@ -162,20 +162,16 @@ const Feeds = ({ userId, post_id }) => {
         const response = await axiosInstance.get("/post");
         if (post_id) {
           
-          setPosts(response.data.response);
+          setPosts(response.data.response.filter(post=>post._id==post_id));
+        }else if(userId){
+          setPosts(response.data.response.filter(post=>post.postedBy._id==userId));
         } else {
           setPosts(response.data.response.reverse());
         }
 
         setLoaded((prev) => !prev);
 
-        if (post_id) {
-          setPosts(
-            posts.filter((post) => {
-              post._id == post_id;
-            })
-          );
-        }
+      
         setLoading(false);
         console.log(response.data.response);
         // console.log(response.data.response);
@@ -208,15 +204,15 @@ const Feeds = ({ userId, post_id }) => {
     );
   } else {
     return (
-      <div className="feed-wrapper">
+      <div className={`feed-wrapper ${className}`}>
         {/* Single post */}
 
         {posts.length != 0 && posts.length != 0 ? (
           posts.map((post) => {
             const isLikedByYou = checkIslikedByYou(post);
             return (
-              <div className="post-wrapper" key={post._id}>
-                <div id={post._id} className="feed-container" key={post._id}>
+              <div className={`post-wrapper`} key={post._id}>
+                <div id={post._id} className={`feed-container  ${className}`} key={post._id}>
                   <div className="feed-profile-header">
                     <div className="feed-user-icon">
                       <img

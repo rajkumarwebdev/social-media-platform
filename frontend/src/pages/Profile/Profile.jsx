@@ -63,7 +63,8 @@ const handleBack=()=>{
         <Loader />
       ) : (
         <div className="profile-container">
-          <div className="username-holder">
+          <div className="profile-header-wrapper">
+            <div className="username-holder">
             <Icon icon={faUser} />
             <Link>{profile.username}</Link>
           </div>
@@ -90,8 +91,13 @@ const handleBack=()=>{
               <div>Following</div>
             </div>
           </div>
+          </div>
+        {!user_Id&&<button>edit</button>}
          {user_Id&&<Icon onClick={handleBack} className="profile-back-btn" icon={faChevronCircleLeft} />}
+
+         <Feeds userId={currUser}/>
         </div>
+
       )}
     </>
   );

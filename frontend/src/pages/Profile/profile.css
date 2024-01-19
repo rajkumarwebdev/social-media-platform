@@ -1,19 +1,24 @@
 .profile-container {
   color: #fff;
-  width: 50vw;
+  width: 60vw;
   display: flex;
   margin: 0 auto;
   flex-direction: column;
   background-color: #3498db;
-  min-height: 400px;
-  padding: 10px;
-  padding-left: 30px;
+  max-height: 80vh;
+
   gap: 15px;
   user-select: none;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2), -5px -5px 10px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
   position: relative;
+  overflow: scroll;
+
 }
+.profile-header-wrapper{
+  margin-bottom: 100px;
+}
+
 .profile-header {
   width: 100%;
   display: flex;
@@ -61,6 +66,9 @@
   cursor: pointer;
 }
 .profile-back-btn:hover {
-  transition:opacity 0.2s linear;
+  transition: opacity 0.2s linear;
   opacity: 0.5;
+}
+.current-user-posts {
+  /* posts on current user */
 }
