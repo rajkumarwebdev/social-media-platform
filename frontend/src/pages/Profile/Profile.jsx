@@ -92,7 +92,7 @@ const handleBack=()=>{
             </div>
           </div>
           </div>
-        {!user_Id&&<button>edit</button>}
+        {/* {!user_Id&&<button>edit</button>} */}
          {user_Id&&<Icon onClick={handleBack} className="profile-back-btn" icon={faChevronCircleLeft} />}
 
          <Feeds userId={currUser}/>
