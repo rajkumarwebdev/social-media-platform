@@ -34,12 +34,14 @@ import FeedAlerts from "./FeedAlerts";
 import PostDropOp from "./PostDropOp";
 import SharePost from "./SharePost/SharePost";
 import Loader from "../../components/Loader/Loader";
-const Feeds = ({ userId, post_id,className }) => {
+import InstaButton from "../../components/InstaButton/InstaButton";
+const Feeds = ({ userId, post_id, className }) => {
   const [commentCount, setCommentCount] = useState();
   const [commented, setCommented] = useState({});
   const [posts, setPosts] = useState([]);
   const [dropdownState, setDropdownState] = useState({});
   const [commentState, setCommentState] = useState({});
+  const [followState, setFollowState] = useState({});
   const { currentUser } = useProfile();
   const [err, setError] = useState(false);
   const [errMsg, setErrMsg] = useState("");
@@ -53,6 +55,18 @@ const Feeds = ({ userId, post_id,className }) => {
   const { id } = useParams();
   const dropRef = useRef();
   const [showShare, setShowShare] = useState(false);
+  const [followBtnState, setFollowBtnState] = useState(false);
+  const [followBtnStateText, setFollowBtnStateText] = useState("Follow");
+
+  //Handle follow function
+  const handleFollow = (post_id) => {
+    setFollowState((prevState) => ({ [post_id]: !prevState[post_id] }));
+    setFollowBtnState((prev) => !prev);
+    followBtnState
+      ? setFollowBtnStateText("Unfollow")
+      : setFollowBtnStateText("Follow");
+  };
+
   function calculateTimeDifference(currentDate, previousDate) {
     const currentDateObj = new Date(currentDate);
     const previousDateObj = new Date(previousDate);
@@ -161,17 +175,19 @@ const Feeds = ({ userId, post_id,className }) => {
       try {
         const response = await axiosInstance.get("/post");
         if (post_id) {
-          
-          setPosts(response.data.response.filter(post=>post._id==post_id));
-        }else if(userId){
-          setPosts(response.data.response.filter(post=>post.postedBy._id==userId));
+          setPosts(
+            response.data.response.filter((post) => post._id == post_id)
+          );
+        } else if (userId) {
+          setPosts(
+            response.data.response.filter((post) => post.postedBy._id == userId)
+          );
         } else {
           setPosts(response.data.response.reverse());
         }
 
         setLoaded((prev) => !prev);
 
-      
         setLoading(false);
         console.log(response.data.response);
         // console.log(response.data.response);
@@ -212,7 +228,11 @@ const Feeds = ({ userId, post_id,className }) => {
             const isLikedByYou = checkIslikedByYou(post);
             return (
               <div className={`post-wrapper`} key={post._id}>
-                <div id={post._id} className={`feed-container  ${className}`} key={post._id}>
+                <div
+                  id={post._id}
+                  className={`feed-container  ${className}`}
+                  key={post._id}
+                >
                   <div className="feed-profile-header">
                     <div className="feed-user-icon">
                       <img
@@ -231,6 +251,14 @@ const Feeds = ({ userId, post_id,className }) => {
                         >{`@${post.postedBy.username}`}</Link>
                       }
                     </div>
+                    <InstaButton
+                      onClick={() => {
+                        handleFollow(post._id);
+                      }}
+                      actionText={followBtnStateText}
+                      backgroundColor={followBtnState && "white"}
+                    />
+
                     <div className="feed-posted-time">
                       {calculateTimeDifference(new Date(), post.createdAt)}
                     </div>
@@ -269,11 +297,7 @@ const Feeds = ({ userId, post_id,className }) => {
                         />
                         {<div>{post.commentCount}</div>}
                       </div>
-                      <div className="fooder-items">
-                        <Icon icon={faRetweet} />
 
-                        <div>5</div>
-                      </div>
                       <div className="fooder-items">
                         <Icon
                           icon={faShare}
@@ -281,7 +305,7 @@ const Feeds = ({ userId, post_id,className }) => {
                             handleShowShare(post._id);
                           }}
                         />
-                        <div>20</div>
+                        <div className="share-text">Share</div>
                       </div>
                     </div>
                     <div className="post-save-btn">

@@ -1,0 +1,19 @@
+.instabutton {
+  padding: 2px 25px;
+  border: none;
+  background-color: #7f8c8d;
+  color: #fff;
+  border-radius: 25px;
+  font-size: 16px;
+  transition: all 0.2s linear;
+  box-shadow: rgba(255, 255, 255, 0.08) 5px 5px 10px 0px;
+}
+
+.instabutton:active {
+  transform: translateY(10px);
+  opacity: 0.5;
+}
+.white {
+  background-color: #fff;
+  color: black;
+}

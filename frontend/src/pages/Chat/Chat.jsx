@@ -7,11 +7,13 @@ import {
   faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import ChatInterface from "./InnerChat/ChatInterface";
+import { Link } from "react-router-dom";
 const Chat = () => {
   const [userProfileName, setUserProfileName] = useState("");
+  const changeLink = () => {};
   return (
     <>
-      {/* <div className="chat-outer-container">
+      <div className="chat-outer-container">
         <div className="chat-inner-container">
           <div className="chat-header">
             <input
@@ -26,21 +28,22 @@ const Chat = () => {
             <Icon className="chat-search-icon" icon={faSearch} />
           </div>
           <div className="chat-profiles">
-            <div className="chat-profile">
+            <div className="chat-profile" onClick={changeLink}>
               <img
                 className="chat-profile-pic"
                 src="/images/userprofile.png"
                 alt="user-profile"
                 width="50px"
               />
-              <p className="chat-profile-name">Rahul</p>
+              <Link to="person/1">
+                <p className="chat-profile-name">Rahul</p>
+              </Link>
+
               <Icon className="chat-profile-action" icon={faEllipsisVertical} />
             </div>
           </div>
         </div>
-    
-      </div> */}
-          <ChatInterface />
+      </div>
     </>
   );
 };

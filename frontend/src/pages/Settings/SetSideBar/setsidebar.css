@@ -1,0 +1,29 @@
+.setsidebar {
+  width: 200px;
+  background-color: #bdc3c7;
+  position: absolute;
+  bottom: 0;
+  top: 85px;
+  padding: 10px;
+  padding-top: 20px;
+  text-align: center;
+  box-shadow: 3px 3px 5px 10px rgba(0, 0, 0, 0.05);
+  user-select: none;
+  border-top-right-radius: 10px;
+  border-left: 1px solid gray;
+
+}
+.settings-items {
+  display: flex;
+  justify-content: baseline;
+  flex-direction: column;
+  gap: 2rem;
+}
+.setitem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px;
+  border-radius: 15px;
+  text-decoration: none;
+}

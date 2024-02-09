@@ -10,6 +10,11 @@ import Feeds from "./pages/Feeds/Feeds";
 import Profile from "./pages/Profile/Profile";
 import Chat from "./pages/Chat/Chat";
 import SinglePost from "./pages/SinglePost/SinglePost";
+import ChatInterface from "./pages/Chat/InnerChat/ChatInterface";
+import SetSideBar from "./pages/Settings/SetSideBar/SetSideBar";
+import ThemeSetting from "./pages/Settings/ThemeSetting/ThemeSetting";
+import AccountSetting from "./pages/Settings/AccountSetting/AccountSetting";
+import SavedPostSetting from "./pages/Settings/SavedPostSetting/SavedPostSetting";
 const App = () => {
   return (
     <>
@@ -26,15 +31,20 @@ const App = () => {
           <Route index path="/" element={<Feeds />}></Route>
           <Route index path="/:id" element={<Feeds />}></Route>
           <Route index path="/post/:ids" element={<SinglePost />}></Route>
-          
+
           <Route path="chat" element={<Chat />}></Route>
+          <Route path="chat/person/:uid" element={<ChatInterface />}></Route>
           <Route path="post" element={<CreatePost />}></Route>
           <Route path="profile" element={<Profile />}></Route>
-        
+
           <Route path="notification" element={<h1>Notification</h1>}></Route>
           <Route path="settings" element={<Settings />}></Route>
         </Route>
-
+        <Route path="/settings" element={<Home />}>
+          <Route path="theme" element={<ThemeSetting />}></Route>
+          <Route path="savedposts" element={<SavedPostSetting />}></Route>
+          <Route path="accounts" element={<AccountSetting />}></Route>
+        </Route>
         <Route
           path="/register"
           element={

@@ -1,5 +1,6 @@
 import React from "react";
 import "./chatinterface.css";
+import { Link, useParams } from "react-router-dom";
 import Icon from "../../../components/Icon/Icon";
 import {
   faArrowLeft,
@@ -13,6 +14,7 @@ import {
   faRotateBack,
 } from "@fortawesome/free-solid-svg-icons";
 const ChatInterface = () => {
+  const { uid } = useParams();
   return (
     <div className="chat-outer-container">
       <div className="chat-inner-container">
@@ -25,16 +27,20 @@ const ChatInterface = () => {
               width="50px"
             />
             <p className="chat-profile-name">Rahul</p>
-            <Icon className="chat-ui-profile-action" icon={faArrowLeft} />
+            <Link to={"/chat"}>
+              {" "}
+              <Icon className="chat-ui-profile-action" icon={faArrowLeft} />
+            </Link>
           </div>
         </div>
-        <div className="chating-section">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse
-          inventore ad quae sed tenetur saepe, tempora recusandae incidunt
-          voluptas nemo.
-        </div>
+        <div className="chating-section">{uid}</div>
         <div className="chat-footer">
-          <input type="text" className="chat-input" />
+          <input
+            type="text"
+            className="chat-input"
+            placeholder="say something..."
+          />
+
           <Icon icon={faPaperPlane} className={"chatting-btn"} />
         </div>
       </div>

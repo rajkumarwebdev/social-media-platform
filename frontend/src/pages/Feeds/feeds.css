@@ -33,11 +33,12 @@
   gap: 10px;
 }
 .feed-profile-header .feed-username {
-  flex: 1;
   color: #bdc3c7;
 }
 
 .feed-posted-time {
+  flex: 1;
+  margin-left: 350px;
   color: #bdc3c7;
 }
 .vertical-icon {
@@ -61,7 +62,6 @@
   margin-right: 10px;
   text-indent: 50px;
   line-height: 2;
-  
 }
 
 .feed-fooder {
@@ -225,7 +225,6 @@
 }
 .comment-user-profile img {
   width: 35px;
-
 }
 .comment-header {
   padding: 5px;
@@ -338,4 +337,6 @@
 .no-post-info {
   color: #f1c40f;
 }
-
+.share-text {
+  font-size: 14px;
+}
