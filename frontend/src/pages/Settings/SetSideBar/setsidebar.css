@@ -1,8 +1,8 @@
 .setsidebar {
   width: 200px;
-  background-color: #bdc3c7;
+  background-color: rgba(0, 0, 0, 0.1);
   position: absolute;
-  bottom: 0;
+  bottom: 10px;
   top: 85px;
   padding: 10px;
   padding-top: 20px;
@@ -10,9 +10,9 @@
   box-shadow: 3px 3px 5px 10px rgba(0, 0, 0, 0.05);
   user-select: none;
   border-top-right-radius: 10px;
-  border-left: 1px solid gray;
-
+  border-bottom-right-radius: 10px;
 }
+
 .settings-items {
   display: flex;
   justify-content: baseline;
@@ -23,7 +23,16 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 5px;
+  padding: 10px;
   border-radius: 15px;
   text-decoration: none;
+  color: #000;
+  transition: all 0.4 s;
+  font-size: 16px;
+}
+.setitem:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+.setitem.active {
+  background-color: rgba(0, 0, 0, 0.1);
 }

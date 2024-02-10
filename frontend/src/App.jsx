@@ -15,6 +15,7 @@ import SetSideBar from "./pages/Settings/SetSideBar/SetSideBar";
 import ThemeSetting from "./pages/Settings/ThemeSetting/ThemeSetting";
 import AccountSetting from "./pages/Settings/AccountSetting/AccountSetting";
 import SavedPostSetting from "./pages/Settings/SavedPostSetting/SavedPostSetting";
+import ChangePassword from "./pages/Settings/AccountSetting/ChangePassword/ChangePassword";
 const App = () => {
   return (
     <>
@@ -44,6 +45,7 @@ const App = () => {
           <Route path="theme" element={<ThemeSetting />}></Route>
           <Route path="savedposts" element={<SavedPostSetting />}></Route>
           <Route path="accounts" element={<AccountSetting />}></Route>
+          <Route path="accounts/changepassword" element={<ChangePassword />}></Route>
         </Route>
         <Route
           path="/register"
