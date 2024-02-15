@@ -10,15 +10,17 @@ import Loader from "../../components/Loader/Loader";
 import Feeds from "../Feeds/Feeds";
 import Button from "../../components/Button/Button";
 import Alert from "../../components/Alert/Alert";
-const Profile = ({ user_Id }) => {
+import { useParams } from "react-router-dom";
+const Profile = () => {
   const { currentUser, setCurrentUser } = useProfile();
   const currUser = JSON.parse(localStorage.getItem("_user")).id;
   const [profile, setProfile] = useState({});
   const [loading, setLoading] = useState(false);
-  const [error,setErr]=useState("");
-const handleBack=()=>{
-  window.history.back();
-}
+  const [error, setErr] = useState("");
+  let { user_Id } = useParams();
+  const handleBack = () => {
+    window.history.back();
+  };
 
   //Fetch userprofile from express
   useEffect(() => {
@@ -27,7 +29,7 @@ const handleBack=()=>{
       setLoading(true);
       setProfile({});
       try {
-        let id =  user_Id ? user_Id : currUser;
+        let id = user_Id ? user_Id : currUser;
         const response = await axiosInstance.post("user/profile", {
           id: id,
         });
@@ -56,7 +58,9 @@ const handleBack=()=>{
     };
     fetchProfile();
   }, []);
-  if(error){return <Alert varient="danger">{error}</Alert>}
+  if (error) {
+    return <Alert varient="danger">{error}</Alert>;
+  }
   return (
     <>
       {loading ? (
@@ -65,39 +69,44 @@ const handleBack=()=>{
         <div className="profile-container">
           <div className="profile-header-wrapper">
             <div className="username-holder">
-            <Icon icon={faUser} />
-            <Link>{profile.username}</Link>
+              <Icon icon={faUser} />
+              <Link>{profile.username}</Link>
+            </div>
+            <div className="profile-header">
+              <div className="profile-pic-holder">
+                <img
+                  width="50px"
+                  height="50px"
+                  src={profile.userProfile}
+                  alt="ddd"
+                />
+                <div className="current-username">{profile.name}</div>
+              </div>
+              <div className="post-count-holder">
+                <div>{profile?.posts?.length ? profile.posts.length : "0"}</div>
+                <div>posts</div>
+              </div>
+              <div className="followers-count-holder">
+                <div>10</div>
+                <div>Followers</div>
+              </div>
+              <div className="following-count-holder">
+                <div>20</div>
+                <div>Following</div>
+              </div>
+            </div>
           </div>
-          <div className="profile-header">
-            <div className="profile-pic-holder">
-              <img
-                width="50px"
-                height="50px"
-                src={profile.userProfile}
-                alt="ddd"
-              />
-              <div className="current-username">{profile.name}</div>
-            </div>
-            <div className="post-count-holder">
-              <div>{profile?.posts?.length ? profile.posts.length : "0"}</div>
-              <div>posts</div>
-            </div>
-            <div className="followers-count-holder">
-              <div>10</div>
-              <div>Followers</div>
-            </div>
-            <div className="following-count-holder">
-              <div>20</div>
-              <div>Following</div>
-            </div>
-          </div>
-          </div>
-        {/* {!user_Id&&<button>edit</button>} */}
-         {user_Id&&<Icon onClick={handleBack} className="profile-back-btn" icon={faChevronCircleLeft} />}
+          {/* {!user_Id&&<button>edit</button>} */}
+          {user_Id && (
+            <Icon
+              onClick={handleBack}
+              className="profile-back-btn"
+              icon={faChevronCircleLeft}
+            />
+          )}
 
-         <Feeds userId={currUser}/>
+          <Feeds userId={currUser} />
         </div>
-
       )}
     </>
   );

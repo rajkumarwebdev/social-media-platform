@@ -21,7 +21,7 @@ router.post("/profile", async (req, res) => {
     console.log(error.message);
   }
 });
-
+//Change user's old password
 router.put("/changepassword", async (req, res) => {
   const userid = req.body.userId;
   const newPassword = req.body.newpassword;
@@ -31,14 +31,15 @@ router.put("/changepassword", async (req, res) => {
   bcrypt.compare(currentPass, oldPassword).then(async (result) => {
     if (result) {
         const encrytedPass = await bcrypt.hash(newPassword, 10);
-        
-      const res = await UserModel.findByIdAndUpdate(userid, {
+        const ress = await UserModel.findByIdAndUpdate(userid, {
         password: encrytedPass,
       });
-      console.log(res);
+      return res.status(202).json({error:false,message:"Password was Changed successfull."});
+    }
+    else {
+      return res.status(500).json({error:true,message:"Please enter valid password!."});
     }
   });
-  // console.log(response)
-  res.send("Success");
+ 
 });
 module.exports = router;

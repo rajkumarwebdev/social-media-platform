@@ -213,11 +213,11 @@ const Feeds = ({ userId, post_id, className }) => {
   };
 
   if (id) {
-    return (
-      <>
-        <Profile user_Id={id} />
-      </>
-    );
+    // return (
+    //   <>
+    //     <Profile user_Id={id} />
+    //   </>
+    // );
   } else {
     return (
       <div className={`feed-wrapper ${className}`}>
@@ -246,7 +246,7 @@ const Feeds = ({ userId, post_id, className }) => {
                       {
                         <Link
                           id={post.postedBy._id}
-                          to={`/${post.postedBy._id}`}
+                          to={`user/${post.postedBy._id}`}
                           className="user-nickname"
                         >{`@${post.postedBy.username}`}</Link>
                       }

@@ -16,6 +16,7 @@ import ThemeSetting from "./pages/Settings/ThemeSetting/ThemeSetting";
 import AccountSetting from "./pages/Settings/AccountSetting/AccountSetting";
 import SavedPostSetting from "./pages/Settings/SavedPostSetting/SavedPostSetting";
 import ChangePassword from "./pages/Settings/AccountSetting/ChangePassword/ChangePassword";
+import Logout from "./pages/Settings/AccountSetting/Logout/Logout";
 const App = () => {
   return (
     <>
@@ -32,6 +33,8 @@ const App = () => {
           <Route index path="/" element={<Feeds />}></Route>
           <Route index path="/:id" element={<Feeds />}></Route>
           <Route index path="/post/:ids" element={<SinglePost />}></Route>
+          <Route index path="/user/:user_Id" element={<Profile />}></Route>
+
 
           <Route path="chat" element={<Chat />}></Route>
           <Route path="chat/person/:uid" element={<ChatInterface />}></Route>
@@ -46,6 +49,8 @@ const App = () => {
           <Route path="savedposts" element={<SavedPostSetting />}></Route>
           <Route path="accounts" element={<AccountSetting />}></Route>
           <Route path="accounts/changepassword" element={<ChangePassword />}></Route>
+          <Route path="accounts/logout" element={<Logout />}></Route>
+
         </Route>
         <Route
           path="/register"

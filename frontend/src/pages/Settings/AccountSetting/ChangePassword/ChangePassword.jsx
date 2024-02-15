@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import "./changepassword.css";
 import axiosInstance from "../../../../axiosInstance";
 import { NavLink } from "react-router-dom";
@@ -8,7 +8,9 @@ import {
   faEye,
   faEyeSlash,
 } from "@fortawesome/free-solid-svg-icons";
-import UserProvider, { useProfile } from "../../../../hooks/UserContext";
+import { useProfile } from "../../../../hooks/UserContext";
+import Loader from "../../../../components/Loader/Loader";
+import Alert from "../../../../components/Alert/Alert";
 const ChangePassword = () => {
   const [currentUserPassword, setCurrentUserPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -16,7 +18,9 @@ const ChangePassword = () => {
   const [errors, setErrors] = useState({});
   const [newEye, setNewEye] = useState(false);
   const [confirmEye, setConfirmEye] = useState(false);
-  const { currentUser}=useProfile()
+  const { currentUser } = useProfile();
+  const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState("");
 
   const handleEyeConfirm = () => {
     setConfirmEye((prev) => !prev);
@@ -32,16 +36,24 @@ const ChangePassword = () => {
   ) => {
     //validation
     let err = {};
-    if (currentUserPassword == "") {
+    if (currentUserPassword.trim() == "") {
       err.currentpass = "You should fill current password!";
+    } else if (currentUserPassword.trim().length < 8) {
+      err.currentpass = "Minimum 8 character's are required";
     }
-    if (newPassword == "") {
+
+    if (newPassword.trim() == "") {
       err.newpass = "You should fill new password!";
+    } else if (newPassword.trim().length < 8) {
+      err.newpass = "Minimum 8 character's are required";
     }
-    if (confirmPassword == "") {
+    if (confirmPassword.trim() == "") {
       err.confirmpass = "You should fill confirm password!";
+    } else if (confirmPassword.trim().length < 8) {
+      err.confirmpass = "Minimum 8 character's are required";
     }
-    if (newPassword != confirmPassword) {
+
+    if (newPassword.trim() != confirmPassword.trim()) {
       err.nomatch = "Password does not matched!";
     }
 
@@ -51,23 +63,52 @@ const ChangePassword = () => {
       return true;
     }
     setErrors(err);
+    return false;
   };
   const changePassword = () => {
     // console.log(currentUserPassword, newPassword, confirmPassword);
     if (
       validateCredentials(currentUserPassword, newPassword, confirmPassword)
     ) {
+      setLoading(true);
+
       const change = async () => {
-        console.log(currentUser);
-        const response = await axiosInstance.put("/user/changepassword", { userId:currentUser.id ,newpassword:newPassword,currentPass:currentUserPassword});
+        setConfirmPassword("");
+        setNewPassword("");
+        try {
+          const response = await axiosInstance.put("/user/changepassword", {
+            userId: currentUser.id,
+            newpassword: newPassword,
+            currentPass: currentUserPassword,
+          });
+          setCurrentUserPassword("");
+          setLoading(false);
+          setAlert("Password was changed successfull.");
+        } catch (message) {
+          const err = {};
+          console.log(message);
+          if (message.response?.data.error) {
+            err.currentpass = message.response?.data.message;
+          }
+          setErrors(err);
+          setLoading(false);
+        }
       };
-      change()
+      change();
+      setLoading(false);
     }
   };
   return (
     <div className="change-password-container">
+      {alert && (
+        <Alert varient={"success"} className={alert && "success-change-pass"}>
+          {alert}
+        </Alert>
+      )}
       <div className="cp-item cp-item-cp">
-        <p className="cp-label">Current Password</p>
+        <p className="cp-label">
+          Current Password
+        </p>
         <input
           value={currentUserPassword}
           onChange={(e) => {
@@ -115,13 +156,13 @@ const ChangePassword = () => {
           icon={confirmEye && confirmPassword ? faEyeSlash : faEye}
         />
       </div>
+      {loading && <Loader align={"center"} />}
       {errors.confirmpass && (
         <div className="error-password-fields">{errors.confirmpass}</div>
       )}
       {errors.nomatch && (
         <div className="error-password-fields">{errors.nomatch}</div>
       )}
-
       <div className="change-password-btn">
         <button
           onClick={changePassword}

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./alert.css";
-const Alert = ({ children, varient ,className}) => {
+const Alert = ({ children, varient ,className,ref}) => {
   
   const handleVisibility = () => {
     setShow(prev=>!prev);
@@ -8,7 +8,7 @@ const Alert = ({ children, varient ,className}) => {
   return (
     <>
    
-        <div className={`alert alert-${varient} ${className}`}>
+        <div ref={ref} className={`alert alert-${varient} ${className}`}>
           {children}
         </div>
       

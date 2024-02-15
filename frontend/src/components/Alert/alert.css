@@ -20,15 +20,13 @@
   font-size: 18px;
   display: flex;
   justify-content: space-between;
-  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2),-3px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2), -3px 10px rgba(0, 0, 0, 0.2);
 }
 
 .alert-success {
-  width: 700px;
   margin: 10px;
   padding: 16px;
-
-
+  width: 300px;
   color: #75b798;
   border-radius: 10px;
   background-color: #051b11;
@@ -40,7 +38,6 @@
 }
 
 .alert-danger {
-
   width: 700px;
   margin: 10px;
   padding: 16px;

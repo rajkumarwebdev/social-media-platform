@@ -3,21 +3,15 @@ import SetSideBar from "../SetSideBar/SetSideBar";
 import Button from "../../../components/Button/Button";
 import ChangePassword from "./ChangePassword/ChangePassword";
 import { Link } from "react-router-dom";
-
+import "./accountsetting.css";
 const AccountSetting = () => {
-  const handleLogout = () => {
-    localStorage.removeItem("_auth");
-    localStorage.removeItem("_user");
-    window.location.assign("/login");
-  };
+
   return (
     <>
       <SetSideBar />
-      <div className="margin-align">
-        {/* <Button className="btn-logout btn-success" onClick={handleLogout}>
-          Logout
-        </Button> */}
+      <div className="margin-align accounts-container">
         <Link to={"/settings/accounts/changepassword"}>changepassword</Link>
+        <Link to={"/settings/accounts/logout"}>Logout</Link>
       </div>
     </>
   );

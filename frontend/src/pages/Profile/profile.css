@@ -13,9 +13,8 @@
   border-radius: 8px;
   position: relative;
   overflow: scroll;
-
 }
-.profile-header-wrapper{
+.profile-header-wrapper {
   margin-bottom: 100px;
 }
 
@@ -61,8 +60,9 @@
 .profile-back-btn {
   font-size: 1.5rem;
   position: absolute;
-  left: 15px;
+  left: 5px;
   top: 15px;
+
   cursor: pointer;
 }
 .profile-back-btn:hover {
@@ -71,4 +71,5 @@
 }
 .current-user-posts {
   /* posts on current user */
+  color: red;
 }
