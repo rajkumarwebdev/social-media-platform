@@ -5,7 +5,8 @@ const router=express.Router();
 
 router.post("/register",async(req,res)=>{
     const userData=req.body;
-    userData.password=await bcrypt.hash(userData.password,10);
+    userData.password = await bcrypt.hash(userData.password, 10);
+   
     try{
        const response = await UserModel.create(userData);
 
