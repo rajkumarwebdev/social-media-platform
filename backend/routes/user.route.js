@@ -21,6 +21,20 @@ router.post("/profile", async (req, res) => {
     console.log(error.message);
   }
 });
+
+router.get("/allusers", async (req,res) => {
+  try {
+    const response = await UserModel.find({});
+    if (!response) {
+      return res.status(500).json({ error: "No users Found" });
+    }
+    else {
+      return res.status(200).json(response);
+    }
+  } catch (error) {
+    return res.status(500).json({ error: `Internal server error!.${error.message}` });
+  }
+});
 //Change user's old password
 router.put("/changepassword", async (req, res) => {
   const userid = req.body.userId;

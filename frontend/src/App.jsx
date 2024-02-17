@@ -37,7 +37,7 @@ const App = () => {
 
 
           <Route path="chat" element={<Chat />}></Route>
-          <Route path="chat/person/:uid" element={<ChatInterface />}></Route>
+          <Route path="chat/person/:name/:uid" element={<ChatInterface />}></Route>
           <Route path="post" element={<CreatePost />}></Route>
           <Route path="profile" element={<Profile />}></Route>
 
