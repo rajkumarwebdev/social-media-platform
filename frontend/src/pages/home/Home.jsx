@@ -24,13 +24,14 @@ const Home = () => {
         <p className="company-logo">
           <NavLink className="org-logo" to="/">Social Media Platform</NavLink>
         </p>
+        <p className="active-users-social-media">Active Users: 0</p>
         <div className="profile-info">
           <Link to="/profile"><img
             className="user-profile"
             src={currentUser.profilePic}
             alt="User Profile"
           /></Link>
-          
+
           <NavLink to="/profile" className="home-username">
             {currentUser?.username}
           </NavLink>

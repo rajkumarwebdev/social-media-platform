@@ -49,22 +49,22 @@ const Chat = () => {
             {
               users.length!=0 ? users.map((user) => {
                 return (
-                  <div key={user._id} className="chat-profile" onClick={changeLink}>
+                  <Link to={`person/${user.name}/${user._id}?userId=${user._id}`} key={user._id} className="chat-profile" onClick={changeLink}>
                     <img
                       className="chat-profile-pic"
                       src={user.userProfile}
                       alt="user-profile"
                       width="50px"
                     />
-                    <Link to={`person/${user.name}/${user._id}`}>
+                    <Link className="chat-interface-link" >
                       <p className="chat-profile-name">{ user.name}</p>
                     </Link>
 
                     <Icon className="chat-profile-action" icon={faEllipsisVertical} />
-                  </div>
+                  </Link>
 
                 )
-              }) : (<div>"Oops!no user found to chat with."</div>)
+              }) : (<div className="user-not-found-error">Oops!user not found.please try again later</div>)
             }
           </div>
         </div>

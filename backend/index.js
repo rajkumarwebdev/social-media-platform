@@ -46,8 +46,10 @@ const io = socketIO(webSoketServer, {
 let entries = new Map();
 io.on("connection", (socket) => {
     
+    socket.on("online", (data) => {
+        socket.broadcast.emit("client-online",{id:data.userId,status:true})
+    });
     console.log("An user is connected...");
-
     socket.on("keypress", (data) => {
         console.log(data); 
         if (entries.has(data.receiverID)) {
@@ -62,14 +64,17 @@ io.on("connection", (socket) => {
                 entries.set(msg.senderID, msg.socketid);
             
         }
-       console.log(entries)
+     
+        console.log(entries)
+        io.emit("totalUsers",{total:entries.size})
     })
     socket.on("singleChat", (msg) => {
         entries.set(msg.senderID, msg.socketid);
         console.log(msg)
-    socket.to(entries.get(msg.receiverID)).emit("back", msg);
+        socket.to(entries.get(msg.receiverID)).emit("back", msg,{receiverid:msg.receiverID,senderid:msg.senderID});
+        
     });
-  
+    
 });
 
 
