@@ -47,6 +47,15 @@ let entries = new Map();
 io.on("connection", (socket) => {
     
     console.log("An user is connected...");
+
+    socket.on("keypress", (data) => {
+        console.log(data); 
+        if (entries.has(data.receiverID)) {
+            
+            socket.to(entries.get(data.receiverID)).emit("typing-event",{ typing: true });
+        }
+      
+    })
     socket.on("id", (msg) => {
         if (msg.socketid) {
            

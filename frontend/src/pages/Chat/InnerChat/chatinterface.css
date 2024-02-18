@@ -8,7 +8,7 @@
   border-bottom: 3px solid wheat;
 }
 .chat-ui-profile {
-  height: 60px;
+  height: 70px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -16,7 +16,14 @@
   padding-right: 20px;
   user-select: none;
   font-size: 20px;
+  position: relative;
 }
+/* .typing-text {
+  font-size: 15px;
+  position: absolute;
+  bottom: 2px;
+  left: 275px;
+} */
 .chat-profile-pic {
   border-radius: 50%;
   border: 2px solid white;
@@ -119,4 +126,12 @@
   color: #130f40;
   font-size: 16px;
   font-weight: 600;
+}
+.typing-text {
+  font-size: 15px;
+  display: none;
+  
+}
+.type-show {
+  display: block;
 }
