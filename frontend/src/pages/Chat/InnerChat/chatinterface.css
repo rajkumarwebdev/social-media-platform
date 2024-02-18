@@ -55,9 +55,11 @@
   padding: 15px;
   font-size: 16px;
   padding-left: 25px;
+  outline: none;
 }
 .chat-input:focus {
-  outline: none;
+  transition: outline 0.2s linear;
+  outline: 2px solid #26de81;
 }
 .chatting-btn {
   cursor: pointer;
@@ -82,11 +84,39 @@
   background-color: #ddd;
   border-radius: 25px;
   padding-left: 2rem;
-  box-shadow:3px 3px 5px 5px inset rgba(0, 0, 0, 0.3);
+  box-shadow: 3px 3px 5px 5px inset rgba(0, 0, 0, 0.3);
 }
 .message {
   padding: 10px;
-  background-color: #dfe6e9;
-  filter: drop-shadow(1px 1px 5px rgba(0, 0, 0, 0.3));
+  color: #ffffff;
+
   border-radius: 20px;
+  margin-left: 10px;
+  font-size: 18px;
+}
+.sender-message-holder {
+  background-color: #34495e;
+  width: 90%;
+  padding: 5px;
+  border-radius: 8px;
+  filter: drop-shadow(1px 1px 5px rgba(0, 0, 0, 0.3));
+}
+.your-message-holder {
+  filter: drop-shadow(1px 1px 5px rgba(0, 0, 0, 0.3));
+
+  width: 80%;
+  padding: 5px;
+  border-radius: 8px;
+  background-color: #2ecc71;
+  align-self: flex-end;
+}
+.sendername {
+  color: #f1c40f;
+  font-size: 16px;
+  font-weight: 600;
+}
+.yourname {
+  color: #130f40;
+  font-size: 16px;
+  font-weight: 600;
 }

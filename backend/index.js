@@ -39,16 +39,26 @@ app.use("/user", userRoute);
 //Socket events & handlers
 const io = socketIO(webSoketServer, {
     cors: {
-        origin:"*"
+        origin: ["http://localhost:3032", "http://192.168.43.249:3032"]
     }
 });
 
-
+let entries = new Map();
 io.on("connection", (socket) => {
+    
     console.log("An user is connected...");
+    socket.on("id", (msg) => {
+        if (msg.socketid) {
+           
+                entries.set(msg.senderID, msg.socketid);
+            
+        }
+       console.log(entries)
+    })
     socket.on("singleChat", (msg) => {
-        console.log(msg); 
-        io.emit("back",msg);
+        entries.set(msg.senderID, msg.socketid);
+        console.log(msg)
+    socket.to(entries.get(msg.receiverID)).emit("back", msg);
     });
   
 });
