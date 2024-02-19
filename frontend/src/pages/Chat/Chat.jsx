@@ -13,20 +13,25 @@ import { useProfile } from "../../hooks/UserContext";
 const Chat = () => {
   const [userProfileName, setUserProfileName] = useState("");
   const [users, setUsers] = useState([]);
-  const {currentUser} = useProfile();
+  const { currentUser } = useProfile();
   const changeLink = () => { };
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const response = await axiosInstance.get("/user/allusers")
-        const result = await response.data.filter((user) => user._id != currentUser.id);
-        setUsers(result);
+
+        const id = await currentUser.id;
+
+        const result = await response.data.filter((user) => user._id != id);
+
         console.log(result)
+        setUsers(result);
       } catch (error) {
         console.log(error.message);
       }
     };
     fetchUsers();
+
   }, [])
 
   return (
@@ -47,9 +52,10 @@ const Chat = () => {
           </div>
           <div className="chat-profiles">
             {
-              users.length!=0 ? users.map((user) => {
+              users.length != 0 ? users.map((user) => {
                 return (
-                  <Link to={`person/${user.name}/${user._id}?userId=${user._id}`} key={user._id} className="chat-profile" onClick={changeLink}>
+                  user._id != currentUser.id && (
+                    <Link to={`person/${user.name}/${user._id}?userId=${user._id}`} key={user._id} className="chat-profile" onClick={changeLink}>
                     <img
                       className="chat-profile-pic"
                       src={user.userProfile}
@@ -57,11 +63,13 @@ const Chat = () => {
                       width="50px"
                     />
                     <Link className="chat-interface-link" >
-                      <p className="chat-profile-name">{ user.name}</p>
+                      <p className="chat-profile-name">{user.name}</p>
                     </Link>
 
                     <Icon className="chat-profile-action" icon={faEllipsisVertical} />
                   </Link>
+                  )
+                 
 
                 )
               }) : (<div className="user-not-found-error">Oops!user not found.please try again later</div>)

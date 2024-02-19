@@ -8,7 +8,6 @@ const mongoose = require("mongoose");
 //Web socket server
 const webSoketServer = http.createServer();
 
-
 //Local Routes imports
 const path = require("path");
 const registerRoute = require("./routes/register.route.js");
@@ -38,64 +37,64 @@ app.use("/user", userRoute);
 
 //Socket events & handlers
 const io = socketIO(webSoketServer, {
-    cors: {
-        origin: ["http://localhost:3032", "http://192.168.43.249:3032"]
-    }
+  cors: {
+    origin: ["http://localhost:3032", "http://192.168.43.249:3032"],
+  },
 });
 
 let entries = new Map();
 io.on("connection", (socket) => {
-    
-    socket.on("online", (data) => {
-        socket.broadcast.emit("client-online",{id:data.userId,status:true})
+  socket.on("online", (data) => {
+    socket.broadcast.emit("client-online", { id: data.userId, status: true });
+  });
+  console.log("An user is connected...");
+  socket.on("keypress", (data) => {
+    console.log(data);
+    if (entries.has(data.receiverID)) {
+      socket
+        .to(entries.get(data.receiverID))
+        .emit("typing-event", { typing: true });
+    }
+  });
+  //handle user diconnect
+  socket.on("userlefted", (data) => {
+    console.log(data);
+    if (data.id != null) {
+      console.log("lefted: " + data.id);
+    }
+  });
+  socket.on("id", (msg) => {
+    if (msg.socketid) {
+      entries.set(msg.senderID, msg.socketid);
+    }
+
+    console.log(entries);
+    io.emit("totalUsers", { total: entries.size });
+  });
+  socket.on("singleChat", (msg) => {
+    entries.set(msg.senderID, msg.socketid);
+    console.log(msg);
+    socket.to(entries.get(msg.receiverID)).emit("back", msg, {
+      receiverid: msg.receiverID,
+      senderid: msg.senderID,
     });
-    console.log("An user is connected...");
-    socket.on("keypress", (data) => {
-        console.log(data); 
-        if (entries.has(data.receiverID)) {
-            
-            socket.to(entries.get(data.receiverID)).emit("typing-event",{ typing: true });
-        }
-      
-    })
-    socket.on("id", (msg) => {
-        if (msg.socketid) {
-           
-                entries.set(msg.senderID, msg.socketid);
-            
-        }
-     
-        console.log(entries)
-        io.emit("totalUsers",{total:entries.size})
-    })
-    socket.on("singleChat", (msg) => {
-        entries.set(msg.senderID, msg.socketid);
-        console.log(msg)
-        socket.to(entries.get(msg.receiverID)).emit("back", msg,{receiverid:msg.receiverID,senderid:msg.senderID});
-        
-    });
-    
+  });
 });
 
-
-(
-    //Server & database config
-    async () => {
-        try {
-            //mongodb server
-            await mongoose.connect(process.env.MONGO_DB_URI);
-            console.log("Database successfully connected!");
-            //http server
-            app.listen(process.env.PORT, () => {
-                console.log(
-                    `Server is running at: http://localhost:${process.env.PORT}`
-                );
-            });
-        } catch (error) {
-            throw new Error(error.message);
-        }
-    }
-)();
+//Server & database config
+(async () => {
+  try {
+    //mongodb server
+    await mongoose.connect(process.env.MONGO_DB_URI);
+    console.log("Database successfully connected!");
+    //http server
+    app.listen(process.env.PORT, () => {
+      console.log(`Server is running at: http://localhost:${process.env.PORT}`);
+    });
+  } catch (error) {
+    throw new Error(error.message);
+  }
+})();
 
 //websocket server
 webSoketServer.listen(process.env.SOCKET_PORT, () => {

@@ -11,8 +11,8 @@ import {
 import { useProfile } from "../../../hooks/UserContext";
 var socket = io("http://192.168.43.249:3032");
 var socketid = "";
-var online_user = ""
-//onlinestatus
+var online_users = []
+
 
 socket.on("totalUsers", (data) => {
   console.log(data.total)
@@ -34,15 +34,17 @@ socket.on("connect", () => {
   const receiverID = localStorage.getItem("receiverid");
 
   socket.emit("id", { socketid: socketid, senderID: senderID, receiverID: receiverID });
+  //online status code(pending)
   socket.emit("online", { userId: senderID })
 
   socket.on("client-online", (data) => {
-    online_user = data.id
+    if (!online_users.includes(data.id)) {
+      online_users.push(data.id);
+    }
     console.log(data.id + "is online now.")
   });
-
-
 })
+
 socket.on("back", (msg, data) => {
   const url = new URLSearchParams(location.search);
   console.log(url)
@@ -66,6 +68,10 @@ socket.on("back", (msg, data) => {
     document.querySelector(".chating-section").scrollTop = document.querySelector(".chating-section").scrollHeight;
   }
 })
+
+
+
+
 const ChatInterface = () => {
   const { uid, name, profile } = useParams();
   const { currentUser } = useProfile();
@@ -142,7 +148,6 @@ const ChatInterface = () => {
               alt="user-profile"
               width="50px"
             />
-            {online_user==localStorage.getItem("receiverid")?<p>Online</p>:<p>Ofline</p>}
             <p className="chat-profile-name">{name}</p>
             <p className="typing-text">Typing...</p>
             <Link to={"/chat"}>
