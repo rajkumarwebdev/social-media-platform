@@ -20,11 +20,14 @@ socket.on("totalUsers", (data) => {
 })
 socket.on("typing-event", (status) => {
   const typeElement = document.querySelector(".typing-text");
-  typeElement.classList.add("type-show");
+  if (typeElement != null) {
+    typeElement.classList.add("type-show");
   setTimeout(() => {
     typeElement.classList.remove("type-show");
   }, 800)
 
+  }
+  
 });
 
 socket.on("connect", () => {
@@ -149,7 +152,7 @@ const ChatInterface = () => {
               width="50px"
             />
             <p className="chat-profile-name">{name}</p>
-            <p className="typing-text">Typing...</p>
+            {uid!=localStorage.getItem("senderid")&&<p className="typing-text">Typing...</p>}
             <Link to={"/chat"}>
 
               <Icon className="chat-ui-profile-action" icon={faArrowLeft} />
