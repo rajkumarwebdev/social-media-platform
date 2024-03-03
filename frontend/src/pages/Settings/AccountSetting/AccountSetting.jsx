@@ -10,7 +10,8 @@ const AccountSetting = () => {
     <>
       <SetSideBar />
       <div className="margin-align accounts-container">
-        <Link to={"/settings/accounts/changepassword"}>changepassword</Link>
+      <Link to={"/settings/accounts/edit/profile"}>UpdateProfile</Link>
+        <Link to={"/settings/accounts/changepassword"}>ChangePassword</Link>
         <Link to={"/settings/accounts/logout"}>Logout</Link>
       </div>
     </>

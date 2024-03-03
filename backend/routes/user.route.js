@@ -4,6 +4,27 @@ const bcrypt = require("bcrypt");
 const router = express.Router();
 const UserModel = require("../models/user.model.js");
 const { isValidObjectId } = require("mongoose");
+const multer = require("multer");
+const path = require("path");
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/images"); // Set the destination folder
+  },
+  filename: function (req, file, cb) {
+    cb(null,file.fieldname+"-"+ Date.now() + "-" + file.originalname); // Set the file name
+  },
+});
+
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5, // 5 MB limit (adjust as needed)
+  },
+});
+router.post("/update/profile", upload.single("file"), (req, res) => {
+  return res.json({upload: true})
+});
+
 router.post("/profile", async (req, res) => {
   try {
     const userId = req.body.id;
@@ -22,17 +43,18 @@ router.post("/profile", async (req, res) => {
   }
 });
 
-router.get("/allusers", async (req,res) => {
+router.get("/allusers", async (req, res) => {
   try {
     const response = await UserModel.find({});
     if (!response) {
       return res.status(500).json({ error: "No users Found" });
-    }
-    else {
+    } else {
       return res.status(200).json(response);
     }
   } catch (error) {
-    return res.status(500).json({ error: `Internal server error!.${error.message}` });
+    return res
+      .status(500)
+      .json({ error: `Internal server error!.${error.message}` });
   }
 });
 //Change user's old password
@@ -44,16 +66,19 @@ router.put("/changepassword", async (req, res) => {
   const oldPassword = response.password;
   bcrypt.compare(currentPass, oldPassword).then(async (result) => {
     if (result) {
-        const encrytedPass = await bcrypt.hash(newPassword, 10);
-        const ress = await UserModel.findByIdAndUpdate(userid, {
+      const encrytedPass = await bcrypt.hash(newPassword, 10);
+      const ress = await UserModel.findByIdAndUpdate(userid, {
         password: encrytedPass,
       });
-      return res.status(202).json({error:false,message:"Password was Changed successfull."});
-    }
-    else {
-      return res.status(500).json({error:true,message:"Please enter valid password!."});
+      return res
+        .status(202)
+        .json({ error: false, message: "Password was Changed successfull." });
+    } else {
+      return res
+        .status(500)
+        .json({ error: true, message: "Please enter valid password!." });
     }
   });
- 
 });
+
 module.exports = router;

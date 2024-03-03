@@ -11,13 +11,7 @@ import {
 import { useProfile } from "../../../hooks/UserContext";
 var socket = io("http://192.168.43.249:3032");
 var socketid = "";
-var online_users = []
 
-
-socket.on("totalUsers", (data) => {
-  console.log(data.total)
-  document.querySelector(".active-users-social-media").innerText ? document.querySelector(".active-users-social-media").innerText = "Active Users :  " + data.total : null
-})
 socket.on("typing-event", (status) => {
   const typeElement = document.querySelector(".typing-text");
   if (typeElement != null) {
@@ -38,7 +32,7 @@ socket.on("connect", () => {
 
   socket.emit("id", { socketid: socketid, senderID: senderID, receiverID: receiverID });
   //online status code(pending)
-  socket.emit("online", { userId: senderID })
+
 
   socket.on("client-online", (data) => {
     if (!online_users.includes(data.id)) {

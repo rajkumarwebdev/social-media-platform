@@ -17,6 +17,7 @@ import AccountSetting from "./pages/Settings/AccountSetting/AccountSetting";
 import SavedPostSetting from "./pages/Settings/SavedPostSetting/SavedPostSetting";
 import ChangePassword from "./pages/Settings/AccountSetting/ChangePassword/ChangePassword";
 import Logout from "./pages/Settings/AccountSetting/Logout/Logout";
+import UpdateProfile from "./pages/Profile/UpdateProfile/UpdateProfile";
 const App = () => {
   return (
     <>
@@ -49,6 +50,7 @@ const App = () => {
           <Route path="savedposts" element={<SavedPostSetting />}></Route>
           <Route path="accounts" element={<AccountSetting />}></Route>
           <Route path="accounts/changepassword" element={<ChangePassword />}></Route>
+          <Route path="accounts/edit/profile" element={<UpdateProfile />}></Route>
           <Route path="accounts/logout" element={<Logout />}></Route>
 
         </Route>
