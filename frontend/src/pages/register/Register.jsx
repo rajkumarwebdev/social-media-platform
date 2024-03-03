@@ -41,6 +41,7 @@ const Register = () => {
     if (validateForm(user, setErrors)) {
       const postFormData = async () => {
         setLoading(true);
+        console.log(user)
         try {
           const response = await axiosInstance.post("/register", user);
           setLoading(false);

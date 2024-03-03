@@ -11,7 +11,7 @@ const storage = multer.diskStorage({
     cb(null, "public/images"); // Set the destination folder
   },
   filename: function (req, file, cb) {
-    cb(null,file.fieldname+"-"+ Date.now() + "-" + file.originalname); // Set the file name
+    cb(null, file.fieldname + "-" + Date.now() + "-" + file.originalname); // Set the file name
   },
 });
 
@@ -21,13 +21,11 @@ const upload = multer({
     fileSize: 1024 * 1024 * 5, // 5 MB limit (adjust as needed)
   },
 });
-router.post("/update/profile", upload.single("file"), (req, res) => {
-  return res.json({upload: true})
-});
-
 router.post("/profile", async (req, res) => {
   try {
     const userId = req.body.id;
+    console.log(userId);
+    console.log("hii");
     if (!isValidObjectId(userId)) {
       return res.status(400).json({ error: "Oops!User Not Found" });
     }
@@ -41,6 +39,33 @@ router.post("/profile", async (req, res) => {
   } catch (error) {
     console.log(error.message);
   }
+});
+router.post("/update/profiles", async (req, res) => {
+  try {
+    console.log(req.body.id);
+    const response =await UserModel.findByIdAndUpdate(req.body.id, {
+      name: req.body.name,
+      username: req.body.username,
+      gender: req.body.gender,
+    });
+    console.log(response);
+    if (response) return res.json({ status: true });
+  } catch (err) {
+    return res.json({ error: err.message });
+  }
+});
+
+router.post("/update/profile", upload.single("file"), async (req, res) => {
+  let image = "/images/userprofile.png";
+
+  if (req.file && req.body.ids) {
+    const response = await UserModel.findByIdAndUpdate(req.body.ids, {
+      userProfile: req.file.filename ? req.file.filename : image,
+    });
+    return res.json({ picture: response.userProfile });
+  }
+
+  return res.json({ upload: true });
 });
 
 router.get("/allusers", async (req, res) => {

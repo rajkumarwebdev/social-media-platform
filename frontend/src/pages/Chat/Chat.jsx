@@ -58,7 +58,7 @@ const Chat = () => {
                     <Link to={`person/${user.name}/${user._id}?userId=${user._id}`} key={user._id} className="chat-profile" onClick={changeLink}>
                     <img
                       className="chat-profile-pic"
-                      src={user.userProfile}
+                      src={user.userProfile!="/images/userprofile.png"?"http://192.168.43.249:3001/images/"+user.userProfile:user.userProfile}
                       alt="user-profile"
                       width="50px"
                     />

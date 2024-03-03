@@ -17,7 +17,7 @@ const postRoute = require("./routes/post.route.js");
 const userRoute = require("./routes/user.route.js");
 const app = express();
 app.use(express.json());
-app.use(express.urlencoded());
+
 const STATIC = path.join(path.dirname(__dirname), "frontend", "dist");
 // app.use(express.static(STATIC));
 app.use(express.static("public"));
@@ -37,32 +37,10 @@ app.use("/api", dataRoute);
 app.use("/post", postRoute);
 app.use("/user", userRoute);
 
-//test
-const multer = require("multer");
-
-const imageStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "public/images");
-  },
-  filename: (req, file, cb) => {
-    cb(
-      null,
-      file.fieldname + "_" + Date.now() + path.extname(file.originalname)
-    );
-  },
-});
-
-const upload = multer({
-  storage: imageStorage,
-});
-app.post("/upload", upload.single("img"), (req, res) => {
-  console.log(req.img);
-});
-
 //Socket events & handlers
 const io = socketIO(webSoketServer, {
   cors: {
-    origin: ["http://localhost:3032", "http://192.168.43.249:3032"],
+    origin: ["http://localhost:3032", "http://192.168.43.249:3032","http://localhost:5173"],
   },
 });
 

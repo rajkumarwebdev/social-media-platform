@@ -3,13 +3,13 @@ import P from "../../components/Paragraph/P";
 import UserPicture from "../../components/UserPicture/UserPicture";
 import { useProfile } from "../../hooks/UserContext";
 
-const TextPost = ({ handleTextValue, hanldeTextPost, error,content}) => {
-  const {currentUser}=useProfile();
+const TextPost = ({ handleTextValue, hanldeTextPost, error, content }) => {
+  const { currentUser } = useProfile();
   return (
     <div className="post-wrapper">
       <div className="text-post-wrapper">
         <div className="text-header">
-          <UserPicture rounded={true} width="40px" height="40px" />
+          <img className="feed-image" src={currentUser.profilePic != "/images/userprofile.png" ? "http://192.168.43.249:3001/images/" + currentUser.profilePic : currentUser.profilePic} alt="" />
           <label>{currentUser.name}</label>
           <label className="meta-q">What's on your mind?</label>
         </div>

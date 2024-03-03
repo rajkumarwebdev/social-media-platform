@@ -340,3 +340,10 @@
 .share-text {
   font-size: 14px;
 }
+.feed-image {
+  width: 50px;
+  height: 45px;
+  object-fit: fill;
+  border-radius: 50%;
+  border: 2px solid #f1c40f;
+}

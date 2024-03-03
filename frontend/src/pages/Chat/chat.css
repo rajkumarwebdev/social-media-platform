@@ -78,10 +78,16 @@
   color: #fff;
   font-size: 18px;
 }
-.user-not-found-error{
+.user-not-found-error {
   position: absolute;
-  top:50%;
+  top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   color: #f1c40f;
+}
+.chat-profile-pic {
+  width: 50px;
+  height: 45px;
+  border-radius: 50%;
+  border: 2px solid #f1c40f;
 }

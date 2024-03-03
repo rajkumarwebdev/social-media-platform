@@ -77,7 +77,7 @@ const Profile = () => {
                 <img
                   width="50px"
                   height="50px"
-                  src={profile.userProfile}
+                  src={profile.userProfile!="/images/userprofile.png"?"http://192.168.43.249:3001/images/"+profile.userProfile:profile.userProfile}
                   alt="ddd"
                 />
                 <div className="current-username">{profile.name}</div>

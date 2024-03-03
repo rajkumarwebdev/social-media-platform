@@ -28,7 +28,7 @@ const Home = () => {
         <div className="profile-info">
           <Link to="/profile"><img
             className="user-profile"
-            src={currentUser.profilePic}
+            src={currentUser.profilePic!="/images/userprofile.png"?"http://192.168.43.249:3001/images/"+currentUser.profilePic:currentUser.profilePic}
             alt="User Profile"
           /></Link>
 
@@ -63,7 +63,7 @@ const Home = () => {
             <p>Notification</p>
           </NavLink>
 
-          <NavLink className="component" to="/settings">
+          <NavLink className="component" to="/settings/accounts">
             <Icon icon={faGear} />
             <p>Settings</p>
           </NavLink>

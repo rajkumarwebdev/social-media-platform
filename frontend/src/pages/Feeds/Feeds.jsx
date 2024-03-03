@@ -236,8 +236,9 @@ const Feeds = ({ userId, post_id, className }) => {
                   <div className="feed-profile-header">
                     <div className="feed-user-icon">
                       <img
+                        className="feed-image"
                         width="50px"
-                        src={post.postedBy.userProfile}
+                        src={post.postedBy.userProfile!="/images/userprofile.png"?"http://192.168.43.249:3001/images/"+post.postedBy.userProfile:post.postedBy.userProfile}
                         alt="user"
                       />
                     </div>

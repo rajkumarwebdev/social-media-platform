@@ -4,7 +4,8 @@ const UserModel = require("../models/user.model.js")
 const router=express.Router();
 
 router.post("/register",async(req,res)=>{
-    const userData=req.body;
+    const userData = req.body;
+    console.log(userData)
     userData.password = await bcrypt.hash(userData.password, 10);
    
     try{
