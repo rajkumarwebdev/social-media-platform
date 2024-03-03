@@ -9,6 +9,7 @@ import {
   faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
 import { useProfile } from "../../../hooks/UserContext";
+import axiosInstance from "../../../axiosInstance";
 var socket = io("http://192.168.43.249:3032");
 var socketid = "";
 
@@ -16,12 +17,12 @@ socket.on("typing-event", (status) => {
   const typeElement = document.querySelector(".typing-text");
   if (typeElement != null) {
     typeElement.classList.add("type-show");
-  setTimeout(() => {
-    typeElement.classList.remove("type-show");
-  }, 800)
+    setTimeout(() => {
+      typeElement.classList.remove("type-show");
+    }, 800)
 
   }
-  
+
 });
 
 socket.on("connect", () => {
@@ -72,6 +73,7 @@ socket.on("back", (msg, data) => {
 const ChatInterface = () => {
   const { uid, name, profile } = useParams();
   const { currentUser } = useProfile();
+  const [userProfile, setUserProfile] = useState("/images/userprofile.png");
   const [chatMessage, setChatMessage] = useState("");
   const msgConRef = useRef();
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -83,13 +85,18 @@ const ChatInterface = () => {
   }, [scrollPosition]);
 
   useEffect(() => {
-
+    const fetchUser = async () => {
+      const result = await axiosInstance.post("user/profile", { id: uid })
+      console.log(result.data)
+      setUserProfile(result.data.response.userProfile);
+    }
+    fetchUser();
+  }, [])
+  useEffect(() => {
     const receiverID = uid;
     const senderID = JSON.parse(localStorage.getItem("_user")).id;
-
     localStorage.setItem("senderid", senderID);
     localStorage.setItem("receiverid", receiverID);
-
 
   }, []);
 
@@ -141,12 +148,12 @@ const ChatInterface = () => {
           <div className="chat-ui-profile">
             <img
               className="chat-profile-pic"
-              src="/images/userprofile.png"
+              src={userProfile != "/images/userprofile.png" ? "http://192.168.43.249:3001/images/" + userProfile : currentUser.profilePic}
               alt="user-profile"
               width="50px"
             />
             <p className="chat-profile-name">{name}</p>
-            {uid!=localStorage.getItem("senderid")&&<p className="typing-text">Typing...</p>}
+            {uid != localStorage.getItem("senderid") && <p className="typing-text">Typing...</p>}
             <Link to={"/chat"}>
 
               <Icon className="chat-ui-profile-action" icon={faArrowLeft} />

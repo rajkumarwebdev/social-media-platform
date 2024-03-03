@@ -25,7 +25,7 @@ const LoadComment = ({comments,post,calculateTimeDifference}) => {
                           {" "}
                           <img
                             className="commented-profile-pic"
-                            src={comment.commentedBy.userProfile}
+                            src={comment.commentedBy.userProfile!="/images/userprofile.png"?"http://192.168.43.249:3001/images/"+comment.commentedBy.userProfile:comment.commentedBy.userProfile}
                             width="30px"
                             alt=""
                           />

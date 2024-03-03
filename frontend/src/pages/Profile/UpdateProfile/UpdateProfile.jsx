@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 import "./updateprofile.css";
 import axiosInstance from '../../../axiosInstance';
 import Icon from "../../../components/Icon/Icon";
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { useProfile } from '../../../hooks/UserContext';
+import { Link } from 'react-router-dom';
 const UpdateProfile = () => {
     const [pic, setPic] = useState();
     const [file, setFile] = useState();
@@ -72,9 +73,9 @@ const UpdateProfile = () => {
                 const result = await axiosInstance.post("user/update/profiles", { id: id, name: name, username: username, gender: gender })
 
                 const response = await axiosInstance.post("user/update/profile", file && formData, { headers: { "Content-Type": "multipart/form-data" } })
-              
+
                 location.replace("/profile")
-          
+
             } catch (err) {
                 console.log(err.message)
             }
@@ -113,6 +114,7 @@ const UpdateProfile = () => {
                     {errors.gender && <div>{errors.gender}</div>}
                 </div>
                 <div className='update-button-holder'><button onClick={handleUpload} className='profile-update-btn'>Update</button></div>
+                <Link className='profile-update-back-link' to={"/settings/accounts"} ><Icon className={"profile-update-back-arrow"} icon={faArrowLeft} ></Icon></Link>
             </div>
         </div>
     )

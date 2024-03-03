@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import "./changepassword.css";
 import axiosInstance from "../../../../axiosInstance";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Icon from "../../../../components/Icon/Icon";
 import {
   faArrowLeft,
@@ -12,6 +12,8 @@ import { useProfile } from "../../../../hooks/UserContext";
 import Loader from "../../../../components/Loader/Loader";
 import Alert from "../../../../components/Alert/Alert";
 const ChangePassword = () => {
+  const navigate = useNavigate()
+
   const [currentUserPassword, setCurrentUserPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -84,6 +86,9 @@ const ChangePassword = () => {
           setCurrentUserPassword("");
           setLoading(false);
           setAlert("Password was changed successfull.");
+          setTimeout(() => {
+            navigate("/settings/accounts/")
+          }, 1500)
         } catch (message) {
           const err = {};
           console.log(message);

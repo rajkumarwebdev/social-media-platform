@@ -23,6 +23,7 @@ input[type="file"] {
   align-items: center;
   gap: 2.5rem;
   margin-top: 80px;
+  position: relative;
 }
 .update-user-image-holder {
   width: 100px;
@@ -52,6 +53,7 @@ input[type="file"] {
   pointer-events: none;
   font-size: 19px;
 }
+
 .update-fields {
   display: flex;
   flex-direction: column;
@@ -78,7 +80,6 @@ input[type="file"] {
 }
 .gender-update label {
   flex: 1;
-
 }
 .gender-update select {
   flex: 3;
@@ -99,4 +100,22 @@ input[type="file"] {
   transition: all 0.2s linear;
   background-color: #34495e;
   color: #fff;
+}
+.profile-update-back-arrow {
+  pointer-events: none;
+  padding: 10px;
+}
+.profile-update-back-link {
+  position: absolute;
+  bottom: 0;
+  color: #fff;
+  left: 2rem;
+  top: 1rem;
+  font-size: large;
+}
+.profile-update-back-link:hover .profile-update-back-arrow {
+  transition: background-color 0.2s linear;
+  cursor: pointer;
+  background-color: tomato;
+  border-radius: 50%;
 }
