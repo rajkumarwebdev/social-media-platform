@@ -5,18 +5,22 @@ import useIpProvider from "../../../hooks/useIpProvider";
 const ImagePost = () => {
   const { currentUser } = useProfile();
   const [image, setImage] = useState("");
-  const ip=useIpProvider()
+  const ip = useIpProvider()
   const handleGetImage = (e) => {
     const img = e.target.files[0];
     const acutualImage = URL.createObjectURL(img);
     setImage(acutualImage)
   }
+  const handleImagePost = () => {
+    //Store image in new db 
+  }
+
   return (
     <div className="post-wrapper">
       <div className="image-post-container">
         <div className="image-post-heading">
           <p className="create-post-logo">Create New Post</p>
-          <p className="image-post-btn">Post</p>
+          <p className="image-post-btn" onClick={handleImagePost}>Post</p>
         </div>
         <div className="profile-show">
           <img className="image-post-image" src={currentUser.profilePic != "/images/userprofile.png" ? `http://${ip}/images/` + currentUser.profilePic : currentUser.profilePic} />

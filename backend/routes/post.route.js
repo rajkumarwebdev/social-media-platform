@@ -1,9 +1,32 @@
 const express = require("express");
 const router = express.Router();
-const checkValidId=require("../middlewares/checkValidId.js")
+const checkValidId = require("../middlewares/checkValidId.js");
 const UserModel = require("../models/user.model.js");
 const PostModel = require("../models/post.model.js");
 const CommentModel = require("../models/comment.model.js");
+const multer = require("multer");
+const postModel = require("../models/post.model.js");
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/posts"); // Set the destination folder
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + "-" + Date.now() + "-" + file.originalname); // Set the file name
+  },
+});
+
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5, // 5 MB limit (adjust as needed)
+  },
+});
+router.post("/image/new", upload.single("image"), async (req, res) => {
+  if (req.image && req.body.id) {
+  //pending work //create new model for this type of posts
+  }
+});
+
 //Create single post
 router.post("/new", async (req, res) => {
   const content = req.body.content;
@@ -50,7 +73,7 @@ router.get("/", async (req, res) => {
       {},
       {
         likeCount: { $size: "$likes" },
-        commentCount:{$size:"$comments"},
+        commentCount: { $size: "$comments" },
         content: 1,
         createdAt: 1,
         updatedAt: 1,
@@ -64,32 +87,32 @@ router.get("/", async (req, res) => {
 });
 
 //get single post
-router.get("/:id",async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
-    const postId=req.body.postid;
-   
-    console.log("Received",postId)
-    res.send("Good")
+    const postId = req.body.postid;
+
+    console.log("Received", postId);
+    res.send("Good");
     // return res.json(response);
   } catch (error) {
     res.sendStatus(500);
   }
 });
 
-
-
 //Get comment count for single post
 router.post("/ccount", async (req, res) => {
   try {
     // const postId=req.body.postid;
-    const response = await PostModel.find({},{commentCount:{$size:"$comments"}})
- 
+    const response = await PostModel.find(
+      {},
+      { commentCount: { $size: "$comments" } }
+    );
+
     return res.json(response);
   } catch (error) {
     res.sendStatus(500);
   }
 });
-
 
 router.put("/like", async (req, res) => {
   try {
@@ -150,12 +173,12 @@ router.post("/comment", async (req, res) => {
 //Get all comments for a single post
 router.post("/comments", async (req, res) => {
   try {
-
     const postId = req.body.postId;
     // console.log(postId)
-    const response=await CommentModel.find({postId:postId}).populate("commentedBy")
-    res.json(response)
-   
+    const response = await CommentModel.find({ postId: postId }).populate(
+      "commentedBy"
+    );
+    res.json(response);
   } catch (error) {}
 });
 
