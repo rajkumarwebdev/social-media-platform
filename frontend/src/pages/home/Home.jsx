@@ -15,20 +15,21 @@ import { NavLink } from "react-router-dom";
 import Icon from "../../components/Icon/Icon";
 import ConfirmModel from "../../components/ConfirmModel/ConfirmModel";
 import { v4 as uuidv4, v4 } from "uuid";
+import useIpProvider from "../../hooks/useIpProvider";
 const Home = () => {
   const { currentUser } = useProfile();
-
+  const ip = useIpProvider();
   return (
     <div className="home-container">
       <div className="navbar">
         <p className="company-logo">
           <NavLink className="org-logo" to="/">Social Media Platform</NavLink>
         </p>
-   
+
         <div className="profile-info">
           <Link to="/profile"><img
             className="user-profile"
-            src={currentUser.profilePic!="/images/userprofile.png"?"http://192.168.43.249:3001/images/"+currentUser.profilePic:currentUser.profilePic}
+            src={currentUser.profilePic != "/images/userprofile.png" ? `http://${ip}/images/` + currentUser.profilePic : currentUser.profilePic}
             alt="User Profile"
           /></Link>
 

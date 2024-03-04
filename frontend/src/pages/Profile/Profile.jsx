@@ -11,12 +11,14 @@ import Feeds from "../Feeds/Feeds";
 import Button from "../../components/Button/Button";
 import Alert from "../../components/Alert/Alert";
 import { useParams } from "react-router-dom";
+import useIpProvider from "../../hooks/useIpProvider";
 const Profile = () => {
   const { currentUser, setCurrentUser } = useProfile();
   const currUser = JSON.parse(localStorage.getItem("_user")).id;
   const [profile, setProfile] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setErr] = useState("");
+  const ip = useIpProvider();
   let { user_Id } = useParams();
   const handleBack = () => {
     window.history.back();
@@ -77,7 +79,7 @@ const Profile = () => {
                 <img
                   width="50px"
                   height="50px"
-                  src={profile.userProfile!="/images/userprofile.png"?"http://192.168.43.249:3001/images/"+profile.userProfile:profile.userProfile}
+                  src={profile.userProfile!="/images/userprofile.png"?`http://${ip}/images/`+profile.userProfile:profile.userProfile}
                   alt="ddd"
                 />
                 <div className="current-username">{profile.name}</div>

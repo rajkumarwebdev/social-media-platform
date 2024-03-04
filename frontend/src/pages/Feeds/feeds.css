@@ -33,12 +33,13 @@
   gap: 10px;
 }
 .feed-profile-header .feed-username {
+  flex: 3;
   color: #bdc3c7;
 }
 
 .feed-posted-time {
   flex: 1;
-  margin-left: 350px;
+  margin-left: 100px;
   color: #bdc3c7;
 }
 .vertical-icon {

@@ -5,6 +5,7 @@ import Icon from "../../../components/Icon/Icon";
 import { faArrowLeft, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { useProfile } from '../../../hooks/UserContext';
 import { Link } from 'react-router-dom';
+import useIpProvider from '../../../hooks/useIpProvider';
 const UpdateProfile = () => {
     const [pic, setPic] = useState();
     const [file, setFile] = useState();
@@ -13,7 +14,7 @@ const UpdateProfile = () => {
     const [username, setUsername] = useState("");
     const [gender, setGender] = useState("");
     const [errors, setErrors] = useState({});
-
+    const ip = useIpProvider();
     useEffect(() => {
 
         const getDetails = async () => {
@@ -87,7 +88,7 @@ const UpdateProfile = () => {
             <div className='update-profile-container'>
                 <div className='update-header-section'>
                     <div className='update-user-image-holder'>
-                        <img className='update-user-image' src={pic ? pic : currentUser.profilePic != "/images/userprofile.png" ? "http://192.168.43.249:3001/images/" + currentUser.profilePic : currentUser.profilePic} alt="preview" />
+                        <img className='update-user-image' src={pic ? pic : currentUser.profilePic != "/images/userprofile.png" ? `http://${ip}/images/` + currentUser.profilePic : currentUser.profilePic} alt="preview" />
                         <input className='upload-image-button' type="file" accept=".png, .jpg, .jpeg" onChange={(e) => { handleImageUpload(e) }} />
                         <Icon className="edit-profile-icon" icon={faEdit} />
                     </div>

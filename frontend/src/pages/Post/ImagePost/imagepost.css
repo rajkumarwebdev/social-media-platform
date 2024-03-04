@@ -2,10 +2,18 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  background-color: #fff;
+  text-align: center;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: -5px -5px 20px rgba(0, 0, 0, 0.3);
+  user-select: none;
 }
 .image-post-heading {
   display: flex;
   justify-content: space-between;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #bbb;
 }
 .profile-show {
   display: flex;
@@ -16,7 +24,7 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  border: 2px solid #fff;
+  border: 1px solid #3498db;
   object-fit: fill;
 }
 
@@ -25,21 +33,21 @@
   min-width: 200px;
   max-height: 200px;
   max-width: 200px;
-  border: 2px dashed black;
-  object-fit: contain;
+  border: 2px dashed #3498db;
   overflow: hidden;
   padding: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
+  align-self: center;
 }
 .image-post-send {
   min-height: inherit;
   min-width: inherit;
   max-width: inherit;
   max-width: inherit;
-  object-fit: contain;
+  object-fit: cover;
   z-index: 5;
 }
 
@@ -51,7 +59,7 @@
   z-index: 10;
   opacity: 0;
 }
-.Image-holder:hover .image-post-send {
+.Image-holder:hover .image-post-send.active {
   filter: blur(5px);
   fill-opacity: 10px;
 }
@@ -62,4 +70,36 @@
 .text-for-image {
   min-height: 50px;
   max-height: 50px;
+  padding: 10px;
+  color: #7f8c8d;
+  resize: none;
+  border: none;
+  outline: none;
+  background-color: #fff;
+  font-size: 16px;
+  border-radius: 10px;
+  border: 1px solid #3498db;
+}
+.share-btn-image-section {
+  text-align: center;
+}
+
+.image-post-btn {
+  color: orangered;
+  cursor: pointer;
+  padding: 3px;
+}
+
+.image-post-btn:hover {
+  transition: background-color 0.5s linear;
+  background-color: orangered;
+  color: #fff;
+  border-radius: 25px;
+}
+.image-post-btn:active {
+  opacity: 0.4;
+}
+.create-post-logo,
+.image-post-username {
+  color: #3498db;
 }

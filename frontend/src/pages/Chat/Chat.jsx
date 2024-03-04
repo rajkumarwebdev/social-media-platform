@@ -10,10 +10,12 @@ import {
 import ChatInterface from "./InnerChat/ChatInterface";
 import { Link } from "react-router-dom";
 import { useProfile } from "../../hooks/UserContext";
+import useIpProvider from "../../hooks/useIpProvider";
 const Chat = () => {
   const [userProfileName, setUserProfileName] = useState("");
   const [users, setUsers] = useState([]);
   const { currentUser } = useProfile();
+  const ip = useIpProvider();
   const changeLink = () => { };
   useEffect(() => {
     const fetchUsers = async () => {
@@ -56,20 +58,20 @@ const Chat = () => {
                 return (
                   user._id != currentUser.id && (
                     <Link to={`person/${user.name}/${user._id}?userId=${user._id}`} key={user._id} className="chat-profile" onClick={changeLink}>
-                    <img
-                      className="chat-profile-pic"
-                      src={user.userProfile!="/images/userprofile.png"?"http://192.168.43.249:3001/images/"+user.userProfile:user.userProfile}
-                      alt="user-profile"
-                      width="50px"
-                    />
-                    <Link className="chat-interface-link" >
-                      <p className="chat-profile-name">{user.name}</p>
-                    </Link>
+                      <img
+                        className="chat-profile-pic"
+                        src={user.userProfile != "/images/userprofile.png" ? `http://${ip}/images/` + user.userProfile : user.userProfile}
+                        alt="user-profile"
+                        width="50px"
+                      />
+                      <Link className="chat-interface-link" >
+                        <p className="chat-profile-name">{user.name}</p>
+                      </Link>
 
-                    <Icon className="chat-profile-action" icon={faEllipsisVertical} />
-                  </Link>
+                      <Icon className="chat-profile-action" icon={faEllipsisVertical} />
+                    </Link>
                   )
-                 
+
 
                 )
               }) : (<div className="user-not-found-error">Oops!user not found.please try again later</div>)

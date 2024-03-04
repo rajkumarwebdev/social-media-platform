@@ -6,6 +6,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import LoadComment from "./LoadComment";
 import { useProfile } from "../../hooks/UserContext";
+import useIpProvider from "../../hooks/useIpProvider";
 
 const Comment = ({
   commentState,
@@ -19,6 +20,7 @@ const Comment = ({
 }) => {
   const [refreshKey, setRefreshKey] = useState(0);
   const { currentUser } = useProfile();
+  const ip =useIpProvider()
   const refresh = () => {
     // Update key to force re-mount
     setRefreshKey(prevKey => prevKey + 1);
@@ -29,7 +31,7 @@ const Comment = ({
         <div className="comment-section-container">
           <div className="comment-header">
             <div className="comment-user-profile">
-              <img src={currentUser.profilePic != "/images/userprofile.png" ? "http://192.168.43.249:3001/images/" + currentUser.profilePic : currentUser.profilePic} alt="" />
+              <img src={currentUser.profilePic != "/images/userprofile.png" ? `http://${ip}/images/` + currentUser.profilePic : currentUser.profilePic} alt="" />
             </div>
             <div className="comment-input">
               <input

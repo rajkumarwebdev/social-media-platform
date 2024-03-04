@@ -10,6 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useProfile } from "../../../hooks/UserContext";
 import axiosInstance from "../../../axiosInstance";
+import useIpProvider from "../../../hooks/useIpProvider";
 var socket = io("http://192.168.43.249:3032");
 var socketid = "";
 
@@ -77,6 +78,7 @@ const ChatInterface = () => {
   const [chatMessage, setChatMessage] = useState("");
   const msgConRef = useRef();
   const [scrollPosition, setScrollPosition] = useState(0);
+  const ip = useIpProvider()
   const scroll = () => {
     setScrollPosition(document.querySelector(".chating-section").scrollHeight);
   }
@@ -148,7 +150,7 @@ const ChatInterface = () => {
           <div className="chat-ui-profile">
             <img
               className="chat-profile-pic"
-              src={userProfile != "/images/userprofile.png" ? "http://192.168.43.249:3001/images/" + userProfile : currentUser.profilePic}
+              src={userProfile != "/images/userprofile.png" ? `http://${ip}/images/` + userProfile : currentUser.profilePic}
               alt="user-profile"
               width="50px"
             />

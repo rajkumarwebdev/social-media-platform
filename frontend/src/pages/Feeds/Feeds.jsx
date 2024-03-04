@@ -35,6 +35,7 @@ import PostDropOp from "./PostDropOp";
 import SharePost from "./SharePost/SharePost";
 import Loader from "../../components/Loader/Loader";
 import InstaButton from "../../components/InstaButton/InstaButton";
+import useIpProvider from "../../hooks/useIpProvider";
 const Feeds = ({ userId, post_id, className }) => {
   const [commentCount, setCommentCount] = useState();
   const [commented, setCommented] = useState({});
@@ -57,7 +58,7 @@ const Feeds = ({ userId, post_id, className }) => {
   const [showShare, setShowShare] = useState(false);
   const [followBtnState, setFollowBtnState] = useState(false);
   const [followBtnStateText, setFollowBtnStateText] = useState("Follow");
-
+  const ip = useIpProvider();
   //Handle follow function
   const handleFollow = (post_id) => {
     setFollowState((prevState) => ({ [post_id]: !prevState[post_id] }));
@@ -164,7 +165,7 @@ const Feeds = ({ userId, post_id, className }) => {
       });
       setPostDeleted((prev) => !prev);
       console.log(response.data);
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
@@ -238,7 +239,7 @@ const Feeds = ({ userId, post_id, className }) => {
                       <img
                         className="feed-image"
                         width="50px"
-                        src={post.postedBy.userProfile!="/images/userprofile.png"?"http://192.168.43.249:3001/images/"+post.postedBy.userProfile:post.postedBy.userProfile}
+                        src={post.postedBy.userProfile != "/images/userprofile.png" ? `http://${ip}/images/` + post.postedBy.userProfile : post.postedBy.userProfile}
                         alt="user"
                       />
                     </div>
@@ -252,13 +253,7 @@ const Feeds = ({ userId, post_id, className }) => {
                         >{`@${post.postedBy.username}`}</Link>
                       }
                     </div>
-                    <InstaButton
-                      onClick={() => {
-                        handleFollow(post._id);
-                      }}
-                      actionText={followBtnStateText}
-                      backgroundColor={followBtnState && "white"}
-                    />
+
 
                     <div className="feed-posted-time">
                       {calculateTimeDifference(new Date(), post.createdAt)}
