@@ -1,0 +1,65 @@
+.image-post-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.image-post-heading {
+  display: flex;
+  justify-content: space-between;
+}
+.profile-show {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.image-post-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  object-fit: fill;
+}
+
+.Image-holder {
+  min-height: 200px;
+  min-width: 200px;
+  max-height: 200px;
+  max-width: 200px;
+  border: 2px dashed black;
+  object-fit: contain;
+  overflow: hidden;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.image-post-send {
+  min-height: inherit;
+  min-width: inherit;
+  max-width: inherit;
+  max-width: inherit;
+  object-fit: contain;
+  z-index: 5;
+}
+
+.image-upload-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-15%);
+  z-index: 10;
+  opacity: 0;
+}
+.Image-holder:hover .image-post-send {
+  filter: blur(5px);
+  fill-opacity: 10px;
+}
+.Image-holder:hover .image-upload-btn {
+  transition: opacity 0.2s linear;
+  opacity: 10;
+}
+.text-for-image {
+  min-height: 50px;
+  max-height: 50px;
+}

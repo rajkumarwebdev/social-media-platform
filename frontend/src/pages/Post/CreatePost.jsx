@@ -3,7 +3,7 @@ import Button from "../../components/Button/Button";
 import "./createpost.css";
 import axiosInstance from "../../axiosInstance";
 import TextPost from "./TextPost";
-import ImagePost from "./ImagePost";
+import ImagePost from "./ImagePost/ImagePost";
 import { useProfile } from "../../hooks/UserContext";
 import {useNavigate} from "react-router-dom";
 
