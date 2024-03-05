@@ -21,9 +21,15 @@ const upload = multer({
     fileSize: 1024 * 1024 * 5, // 5 MB limit (adjust as needed)
   },
 });
-router.post("/image/new", upload.single("image"), async (req, res) => {
-  if (req.image && req.body.id) {
-  //pending work //create new model for this type of posts
+router.post("/image/new", upload.single("file"), async (req, res) => {
+ 
+  if (req.file && req.body.id) {
+    //pending work //create new model for this type of posts
+    const filename = req.file.filename;
+    const postid = req.body.id;
+    const response = await PostModel.findByIdAndUpdate(postid, { image: filename, isImage: true })
+   console.log(response);
+    return res.json({"status":true})
   }
 });
 
@@ -36,7 +42,7 @@ router.post("/new", async (req, res) => {
       content: content,
       postedBy: postedUserId,
     });
-    console.log();
+   
     await UserModel.findByIdAndUpdate(
       { _id: postedUserId },
       { $push: { posts: response._id } }
@@ -78,6 +84,8 @@ router.get("/", async (req, res) => {
         createdAt: 1,
         updatedAt: 1,
         likes: 1,
+        image: 1,
+        isImage:1
       }
     ).populate("postedBy");
     return res.json({ response, len: response.length });

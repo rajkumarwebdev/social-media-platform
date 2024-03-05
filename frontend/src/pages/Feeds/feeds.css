@@ -33,7 +33,7 @@
   gap: 10px;
 }
 .feed-profile-header .feed-username {
-  flex: 3;
+  flex: 2;
   color: #bdc3c7;
 }
 
@@ -347,4 +347,32 @@
   object-fit: fill;
   border-radius: 50%;
   border: 2px solid #f1c40f;
+}
+
+.feed-body-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: relative;
+}
+.feed-content-image {
+  min-width: 50%;
+  max-width: 50%;
+  place-self: center;
+  border: 3px solid #f1c40f;
+  filter: drop-shadow(4px 4px 10px rgba(0, 0, 0, 0.3));
+  cursor: pointer;
+}
+.feed-content-image:hover {
+  filter: brightness(1.2);
+}
+.feed-content {
+  text-indent: 2rem;
+  margin-bottom: 2rem;
+}
+.image-download {
+  position: absolute;
+  right: 170px;
+  color: #fff;
+  font-size: 18px;
 }

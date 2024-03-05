@@ -5,6 +5,8 @@ const postSchema = new mongoose.Schema({
     pinned:Boolean,
     likes:[{type:mongoose.Schema.Types.ObjectId,ref:"Users"}],
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comments" }],
+    image: { type: String },
+    isImage:{type:Boolean}
 },{
     timestamps:true,versionKey:false
 })

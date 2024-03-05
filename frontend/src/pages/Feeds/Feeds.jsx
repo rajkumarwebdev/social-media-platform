@@ -19,6 +19,7 @@ import {
   faWarning,
   faPaperPlane,
   faEllipsisVertical,
+  faDownload,
 } from "@fortawesome/free-solid-svg-icons";
 import axiosInstance from "../../axiosInstance";
 import Icon from "../../components/Icon/Icon";
@@ -236,12 +237,14 @@ const Feeds = ({ userId, post_id, className }) => {
                 >
                   <div className="feed-profile-header">
                     <div className="feed-user-icon">
+
                       <img
                         className="feed-image"
                         width="50px"
                         src={post.postedBy.userProfile != "/images/userprofile.png" ? `http://${ip}/images/` + post.postedBy.userProfile : post.postedBy.userProfile}
                         alt="user"
                       />
+
                     </div>
                     <div className="feed-username">
                       {`${post.postedBy.name} `}
@@ -265,7 +268,11 @@ const Feeds = ({ userId, post_id, className }) => {
                       onClick={() => handleDropDown(post._id)}
                     />
                   </div>
-                  <div className="feed-body-content">{post.content}</div>
+                  <div className="feed-body-content">
+                    {post.isImage && (<img className="feed-content-image" src={post.isImage && `http://${ip}/posts/` + post.image} />)}
+                    {post.isImage && <a className="image-download" href={post.isImage && `http://${ip}/posts/` + post.image} download ><Icon icon={faDownload}/></a>}
+                    <div className="feed-content">{post.content}</div>
+                  </div>
                   <div className="feed-fooder">
                     <div className="feed-fooder-icons">
                       <div className="fooder-items">
