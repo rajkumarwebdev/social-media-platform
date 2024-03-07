@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useProfile } from "../../hooks/UserContext";
 import { Link, Outlet } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,6 +9,8 @@ import {
   faGear,
   faMessage,
   faUpload,
+  faToggleOff,
+  faToggleOn,
 } from "@fortawesome/free-solid-svg-icons";
 import "./home.css";
 import { NavLink } from "react-router-dom";
@@ -19,9 +21,28 @@ import useIpProvider from "../../hooks/useIpProvider";
 const Home = () => {
   const { currentUser } = useProfile();
   const ip = useIpProvider();
+  const [color, setColor] = useState("");
+  useEffect(() => {
+    localStorage.getItem("color") && setColor(localStorage.getItem("color"));
+      
+  }, [color]);
+  const handleColorSwitch = () => {
+    if (!color) {
+      setColor("color");
+      localStorage.setItem("color", color);
+    } else {
+      setColor("");
+    }
+  };
   return (
-    <div className="home-container">
+    <div className={`home-container ${color}`} data-color="#000">
       <div className="navbar">
+        <p>
+          <Icon
+            icon={color ? faToggleOn : faToggleOff}
+            onClick={handleColorSwitch}
+          />
+        </p>
         <p className="company-logo">
           <NavLink className="org-logo" to="/">
             Social Media Platform
