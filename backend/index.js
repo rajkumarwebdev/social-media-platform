@@ -19,6 +19,7 @@ const app = express();
 app.use(express.json());
 
 const STATIC = path.join(path.dirname(__dirname), "frontend", "dist");
+app.use(express.static(STATIC));
 // app.use(express.static(STATIC));
 app.use(express.static("public"));
 //Handle Cross origin requests..
@@ -40,7 +41,7 @@ app.use("/user", userRoute);
 //Socket events & handlers
 const io = socketIO(webSoketServer, {
   cors: {
-    origin: ["http://localhost:3032", "http://192.168.43.249:3032","http://localhost:5173"],
+    origin: ["http://localhost:3032", "http://192.168.25.56:3001","http://localhost:5173"],
   },
 });
 

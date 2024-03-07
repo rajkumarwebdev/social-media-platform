@@ -1,8 +1,8 @@
-import React from 'react'
+import React from "react";
 
 const useIpProvider = () => {
-    const SERVER_IP = "192.168.43.249:3001"
-    return SERVER_IP;
-}
+  const SERVER_IP = "192.168.25.56:3001";
+  return SERVER_IP;
+};
 
-export default useIpProvider
+export default useIpProvider;
