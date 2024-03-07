@@ -132,6 +132,10 @@ body {
 .typing-text {
   font-size: 15px;
   display: none;
+  position: absolute;
+  top: 80%;
+  left: 53%;
+  transform: translate(-50%, -50%);
 }
 .type-show {
   display: block;

@@ -36,23 +36,30 @@ const App = () => {
           <Route index path="/post/:ids" element={<SinglePost />}></Route>
           <Route index path="/user/:user_Id" element={<Profile />}></Route>
 
-
           <Route path="chat" element={<Chat />}></Route>
-          <Route path="chat/person/:name/:uid" element={<ChatInterface />}></Route>
+          <Route
+            path="chat/person/:name/:uid"
+            element={<ChatInterface />}
+          ></Route>
           <Route path="post" element={<CreatePost />}></Route>
           <Route path="profile" element={<Profile />}></Route>
 
-          <Route path="notification" element={<h1>Notification</h1>}></Route>
+          {/* <Route path="notification" element={<h1>Notification</h1>}></Route> */}
           <Route path="settings" element={<Settings />}></Route>
         </Route>
         <Route path="/settings" element={<Home />}>
           <Route path="theme" element={<ThemeSetting />}></Route>
           <Route path="savedposts" element={<SavedPostSetting />}></Route>
           <Route path="accounts" element={<AccountSetting />}></Route>
-          <Route path="accounts/changepassword" element={<ChangePassword />}></Route>
-          <Route path="accounts/edit/profile" element={<UpdateProfile />}></Route>
+          <Route
+            path="accounts/changepassword"
+            element={<ChangePassword />}
+          ></Route>
+          <Route
+            path="accounts/edit/profile"
+            element={<UpdateProfile />}
+          ></Route>
           <Route path="accounts/logout" element={<Logout />}></Route>
-
         </Route>
         <Route
           path="/register"

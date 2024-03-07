@@ -160,7 +160,7 @@ const ChatInterface = () => {
               src={
                 userProfile != "/images/userprofile.png"
                   ? `http://${ip}/images/` + userProfile
-                  : currentUser.profilePic
+                  :"/images/userprofile.png"
               }
               alt="user-profile"
               width="50px"

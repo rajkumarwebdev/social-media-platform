@@ -23,15 +23,23 @@ const Home = () => {
     <div className="home-container">
       <div className="navbar">
         <p className="company-logo">
-          <NavLink className="org-logo" to="/">Social Media Platform</NavLink>
+          <NavLink className="org-logo" to="/">
+            Social Media Platform
+          </NavLink>
         </p>
 
         <div className="profile-info">
-          <Link to="/profile"><img
-            className="user-profile"
-            src={currentUser.profilePic != "/images/userprofile.png" ? `http://${ip}/images/` + currentUser.profilePic : currentUser.profilePic}
-            alt="User Profile"
-          /></Link>
+          <Link to="/profile">
+            <img
+              className="user-profile"
+              src={
+                currentUser.profilePic != "/images/userprofile.png"
+                  ? `http://${ip}/images/` + currentUser.profilePic
+                  : currentUser.profilePic
+              }
+              alt="User Profile"
+            />
+          </Link>
 
           <NavLink to="/profile" className="home-username">
             {currentUser?.username}
@@ -59,10 +67,10 @@ const Home = () => {
             <p>Profile</p>
           </NavLink>
 
-          <NavLink className="component" to="/notification">
+          {/* <NavLink className="component" to="/notification">
             <Icon icon={faBell} />
             <p>Notification</p>
-          </NavLink>
+          </NavLink> */}
 
           <NavLink className="component" to="/settings/accounts">
             <Icon icon={faGear} />
