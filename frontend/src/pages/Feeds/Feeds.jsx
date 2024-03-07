@@ -166,7 +166,7 @@ const Feeds = ({ userId, post_id, className }) => {
       });
       setPostDeleted((prev) => !prev);
       console.log(response.data);
-    } catch (error) { }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -237,14 +237,16 @@ const Feeds = ({ userId, post_id, className }) => {
                 >
                   <div className="feed-profile-header">
                     <div className="feed-user-icon">
-
                       <img
                         className="feed-image"
                         width="50px"
-                        src={post.postedBy.userProfile != "/images/userprofile.png" ? `http://${ip}/images/` + post.postedBy.userProfile : post.postedBy.userProfile}
+                        src={
+                          post.postedBy.userProfile != "/images/userprofile.png"
+                            ? `http://${ip}/images/` + post.postedBy.userProfile
+                            : post.postedBy.userProfile
+                        }
                         alt="user"
                       />
-
                     </div>
                     <div className="feed-username">
                       {`${post.postedBy.name} `}
@@ -257,7 +259,6 @@ const Feeds = ({ userId, post_id, className }) => {
                       }
                     </div>
 
-
                     <div className="feed-posted-time">
                       {calculateTimeDifference(new Date(), post.createdAt)}
                     </div>
@@ -269,8 +270,21 @@ const Feeds = ({ userId, post_id, className }) => {
                     />
                   </div>
                   <div className="feed-body-content">
-                    {post.isImage && (<img className="feed-content-image" src={post.isImage && `http://${ip}/posts/` + post.image} />)}
-                    {post.isImage && <a className="image-download" href={post.isImage && `http://${ip}/posts/` + post.image} download ><Icon icon={faDownload}/></a>}
+                    {post.isImage && (
+                      <img
+                        className="feed-content-image"
+                        src={post.isImage && `http://${ip}/posts/` + post.image}
+                      />
+                    )}
+                    {post.isImage && (
+                      <a
+                        className="image-download"
+                        href={post.isImage && `${ip}/posts/` + post.image}
+                        download
+                      >
+                        <Icon icon={faDownload} />
+                      </a>
+                    )}
                     <div className="feed-content">{post.content}</div>
                   </div>
                   <div className="feed-fooder">
