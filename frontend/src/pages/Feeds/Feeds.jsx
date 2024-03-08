@@ -282,7 +282,7 @@ const Feeds = ({ userId, post_id, className }) => {
                         href={post.isImage && `${ip}/posts/` + post.image}
                         download
                       >
-                        <Icon icon={faDownload} />
+                        <Icon className={"download-icon"} icon={faDownload} />
                       </a>
                     )}
                     <div className="feed-content">{post.content}</div>

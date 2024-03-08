@@ -21,25 +21,28 @@ import useIpProvider from "../../hooks/useIpProvider";
 const Home = () => {
   const { currentUser } = useProfile();
   const ip = useIpProvider();
-  const [color, setColor] = useState("");
+  const [color, setColor] = useState("color");
+  const [isColor, setIsColor] = useState(()=>{return localStorage.getItem("color")||false})
   useEffect(() => {
-    localStorage.getItem("color") && setColor(localStorage.getItem("color"));
-      
-  }, [color]);
-  const handleColorSwitch = () => {
-    if (!color) {
-      setColor("color");
-      localStorage.setItem("color", color);
-    } else {
-      setColor("");
+    if (!localStorage.getItem("color")) {
+      setColor(true);
+    localStorage.setItem("color",isColor) 
     }
+    else {
+      setColor(false);
+      localStorage.removeItem("color")
+    }
+  },[isColor])
+  const handleColorSwitch = () => {
+    setIsColor((prev) => !prev);
   };
   return (
-    <div className={`home-container ${color}`} data-color="#000">
+    <div className={`home-container ${isColor && "color"}`} data-color="#000">
       <div className="navbar">
         <p>
           <Icon
-            icon={color ? faToggleOn : faToggleOff}
+            className="toggle-btn"
+            icon={isColor ? faToggleOn : faToggleOff}
             onClick={handleColorSwitch}
           />
         </p>
