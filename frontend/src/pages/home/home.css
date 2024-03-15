@@ -7,12 +7,11 @@
   margin-right: 2rem;
 }
 .color * {
-  background-color: #0a3d62 !important;
+  background-color: #344955 !important;
   color: #fff !important;
- 
 }
 .color {
-  background-color: #0a3d62 !important;
+  background-color: #344955 !important;
   color: #fff !important;
 }
 input,
@@ -143,3 +142,4 @@ select {
   color: #1b1919;
   text-decoration: underline;
 }
+

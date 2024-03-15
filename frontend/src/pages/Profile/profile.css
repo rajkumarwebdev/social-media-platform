@@ -16,8 +16,17 @@
 }
 .profile-header-wrapper {
   margin-bottom: 100px;
+  position: fixed;
+  z-index: 1000000;
+  width: 60%;
+  background-color: #3498db;
+  border-bottom: 1px solid #fff;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+  padding: 10px;
 }
-
+.user-posts-now {
+  margin-top: 5rem;
+}
 .profile-header {
   width: 100%;
   display: flex;

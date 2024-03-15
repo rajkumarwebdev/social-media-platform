@@ -8,7 +8,7 @@ const SetSideBar = () => {
     <>
       <div className="setsidebar">
         <div className="settings-items">
-          <NavLink to={"/settings/theme"} className="setitem theme-item">
+          {/* <NavLink to={"/settings/theme"} className="setitem theme-item">
             <Icon icon={faSun} />
             <p>Themes</p>
           </NavLink>
@@ -18,7 +18,7 @@ const SetSideBar = () => {
           >
             <Icon icon={faBookmark} />
             <p>Saved posts</p>
-          </NavLink>
+          </NavLink> */}
           <NavLink to="/settings/accounts" className="setitem accounts-item">
             <Icon icon={faUser} />
             <p>Accounts</p>

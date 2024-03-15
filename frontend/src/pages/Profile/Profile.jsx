@@ -107,7 +107,7 @@ const Profile = () => {
             />
           )}
 
-          <Feeds userId={currUser} />
+          <Feeds className="user-posts-now" userId={currUser} />
         </div>
       )}
     </>
